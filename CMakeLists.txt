@@ -95,6 +95,8 @@ CUSTOM_VAPIS
     vapi/config.vapi
     vapi/indicator-0.4.vapi
 OPTIONS
+	-g
+	--save-temps
 	--thread
 )
 

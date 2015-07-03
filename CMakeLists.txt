@@ -33,7 +33,7 @@ include (CPack)
 add_custom_target (dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
 # Set dependencies
-set (WINGPANEL_DEPS "gobject-2.0;glib-2.0;gio-2.0;gee-1.0;gdk-x11-3.0;x11;gtk+-3.0;granite")
+set (WINGPANEL_DEPS "gobject-2.0;glib-2.0;gio-2.0;gee-0.8;gdk-x11-3.0;x11;gtk+-3.0;granite")
 set (WINGPANEL_DEPS_NOVALA "gthread-2.0;indicator3-0.4")
 find_package (PkgConfig)
 pkg_check_modules (DEPS REQUIRED ${WINGPANEL_DEPS})

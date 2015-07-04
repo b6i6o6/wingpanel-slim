@@ -1,0 +1,29 @@
+<schemalist>	
+	<schema path="/org/pantheon/desktop/wingpanel/" id="org.pantheon.desktop.wingpanel" gettext-domain="wingpanel">
+		<key type="as" name="blacklist">
+			<default>[ 'libappmenu.so' ]</default>
+			<summary>List of indicators.</summary>
+			<description>These indicators will not be displayed in Wingpanel.</description>
+		</key>
+		<key type="b" name="show-launcher">
+			<default>true</default>
+			<summary>Whether to show the Applications Launcher or not.</summary>
+			<description>Whether to show the Applications Launcher or not.</description>
+		</key>
+		<key type="s" name="default-launcher">
+			<default>"slingshot-launcher"</default>
+			<summary>The default program to use as App launcher.</summary>
+			<description>The default program to use as App launcher.</description>
+		</key>
+		<key type="d" name="background-alpha">
+			<default>0.8</default>
+			<summary>Background opacity variable.</summary>
+			<description>Background opacity variable (must be between zero and one).</description>
+		</key>
+		<key type="b" name="auto-adjust-alpha">
+			<default>true</default>
+			<summary>Automatically update background alpha.</summary>
+			<description>Automatically update the background alpha to zero if it will be readable, else 0.8.</description>
+		</key>
+	</schema>
+</schemalist>

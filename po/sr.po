@@ -1,0 +1,54 @@
+# Serbian translation for wingpanel
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the wingpanel package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wingpanel\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2014-08-06 22:10-0500\n"
+"PO-Revision-Date: 2014-08-29 18:36+0000\n"
+"Last-Translator: Иван Благојевић <ivan_blagojevic@mail.com>\n"
+"Language-Team: Serbian <sr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-04-14 05:19+0000\n"
+"X-Generator: Launchpad (build 17423)\n"
+
+#: /home/codygarver/wingpanel/po/../src/Widgets/AppsButton.vala:40
+msgid "Applications"
+msgstr "Апликације"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:72
+msgid "Are you sure you want to Log Out?"
+msgstr "Да ли заиста желиш да се одјавиш?"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:73
+msgid "This will close all open applications."
+msgstr "Ово ће затворити све отворене апликације."
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:74
+msgid "Log Out"
+msgstr "Одјави се"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:79
+msgid "Are you sure you want to Shut Down?"
+msgstr "Да ли заиста желиш да угасиш?"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:80
+msgid "This will close all open applications and turn off this device."
+msgstr "Ово ће затворити све отворене апликације и искључити уређај."
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:81
+msgid "Shut Down"
+msgstr "Искључи"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:114
+msgid "Restart"
+msgstr "Поново покрени"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:121
+msgid "Cancel"
+msgstr "Одустани"

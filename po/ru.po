@@ -1,0 +1,55 @@
+# Russian translation for wingpanel
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the wingpanel package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wingpanel\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-06 22:10-0500\n"
+"PO-Revision-Date: 2014-09-05 09:56+0000\n"
+"Last-Translator: Artem Anufrij <Unknown>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-04-14 05:19+0000\n"
+"X-Generator: Launchpad (build 17423)\n"
+"Language: ru\n"
+
+#: /home/codygarver/wingpanel/po/../src/Widgets/AppsButton.vala:40
+msgid "Applications"
+msgstr "Приложения"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:72
+msgid "Are you sure you want to Log Out?"
+msgstr "Вы уверены что хотите выйти из системы?"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:73
+msgid "This will close all open applications."
+msgstr "Будут закрыты все открытые программы."
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:74
+msgid "Log Out"
+msgstr "Выйти из системы"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:79
+msgid "Are you sure you want to Shut Down?"
+msgstr "Вы уверены что хотите выключить компьютер?"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:80
+msgid "This will close all open applications and turn off this device."
+msgstr "Будут закрыты все открытые программы и выключен компьютер."
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:81
+msgid "Shut Down"
+msgstr "Выключить"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:114
+msgid "Restart"
+msgstr "Перезагрузить"
+
+#: /home/codygarver/wingpanel/po/../src/Services/EndSessionDialog.vala:121
+msgid "Cancel"
+msgstr "Отменить"

@@ -30,6 +30,8 @@ public class Wingpanel.Services.IndicatorSorter {
     }
 
     private const IndicatorOrderNode[] DEFAULT_ORDER = {
+        { "libdatetime.so", "date" },                      // date time widgets
+        { "com.canonical.indicator.datetime", "date" },
         { "libapplication.so", null },                   // indicator-application (App indicators)
         { "libapplication.so", "keyboard" },             // Keyboard layout selector (old)
         { "libapplication.so", "gsd-keyboard-xkb" },     // keyboard layout selector

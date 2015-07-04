@@ -70,12 +70,7 @@ namespace Wingpanel.Widgets {
         }
 
         private void create_entry (IndicatorWidget entry) {
-            string entry_name = entry.get_indicator ().get_name ();
-
-            if (entry_name == "libdatetime.so" || entry_name == "com.canonical.indicator.datetime")
-                center_menubar.prepend (entry);
-            else
-                right_menubar.insert_sorted (entry);
+            right_menubar.insert_sorted (entry);
         }
 
         private void delete_entry (IndicatorWidget entry) {

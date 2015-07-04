@@ -36,6 +36,7 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
 
     private const int SHADOW_SIZE = 4;
     private const int FALLBACK_FADE_DURATION = 150;
+    private const int ELEMENTARY_SPACING = 32;
 
     private int panel_height = 0;
     private int panel_x;
@@ -237,11 +238,11 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
         get_allocation (out size);
 
         if (panel_position == Services.Settings.WingpanelSlimPanelPosition.RIGHT)
-            panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width - 32;
+            panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width - ELEMENTARY_SPACING;
         else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.MIDDLE)
             panel_x = monitor_dimensions.x + (monitor_dimensions.width / 2) - (size.width / 2);
         else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.LEFT)
-            panel_x = monitor_dimensions.x + 32;
+            panel_x = monitor_dimensions.x + ELEMENTARY_SPACING;
         else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_RIGHT)
             panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width;
         else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_LEFT)
@@ -426,7 +427,7 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
         get_allocation(out size);
 
         panel_width = 1;
-        panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width - 32;
+        panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width - ELEMENTARY_SPACING;
         panel_y = monitor_dimensions.y;
 
         move (panel_x, panel_y + panel_displacement);

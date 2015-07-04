@@ -41,9 +41,13 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
     private int panel_x;
     private int panel_y;
     private int panel_width;
-    private int panel_displacement = -40;
+    private int panel_displacement = 0;
     private int monitor_num;
     private uint animation_timer = 0;
+    protected int panel_padding = 10;
+    protected Gdk.Rectangle monitor_dimensions;
+    protected Services.Settings.WingpanelSlimPanelEdge panel_edge = Services.Settings.WingpanelSlimPanelEdge.SLANTED;
+    protected Services.Settings.WingpanelSlimPanelPosition panel_position = Services.Settings.WingpanelSlimPanelPosition.RIGHT;
 
     private double legible_alpha_value = -1.0;
     private double panel_alpha = 0.0;
@@ -232,11 +236,23 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
         Gtk.Allocation size;
         get_allocation (out size);
 
+        if (panel_position == Services.Settings.WingpanelSlimPanelPosition.RIGHT)
+            panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width - 32;
+        else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.MIDDLE)
+            panel_x = monitor_dimensions.x + (monitor_dimensions.width / 2) - (size.width / 2);
+        else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.LEFT)
+            panel_x = monitor_dimensions.x + 32;
+        else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_RIGHT)
+            panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width;
+        else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_LEFT)
+            panel_x = monitor_dimensions.x;
+
+        move (panel_x, panel_y + panel_displacement);
+
         if (panel_height != size.height) {
             panel_height = size.height;
             message ("New Panel Height: %i", size.height);
             shadow.move (panel_x, panel_y + panel_height + panel_displacement);
-            set_struts ();
         }
 
         var ctx = get_draw_style_context ();
@@ -377,34 +393,7 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
         panel_resize (true);
     }
 
-    private void set_struts () {
-        if (!get_realized ())
-            return;
-
-        // Since uchar is 8 bits in vala but the struts are 32 bits
-        // we have to allocate 4 times as much and do bit-masking
-        var struts = new ulong[Struts.N_VALUES];
-
-        struts[Struts.TOP] = (panel_height + panel_y) * this.get_scale_factor ();
-        struts[Struts.TOP_START] = panel_x;
-        struts[Struts.TOP_END] = panel_x + panel_width - 1;
-
-        var first_struts = new ulong[Struts.BOTTOM + 1];
-        for (var i = 0; i < first_struts.length; i++)
-            first_struts[i] = struts[i];
-
-        unowned X.Display display = Gdk.X11Display.get_xdisplay (get_display ());
-        var xid = Gdk.X11Window.get_xid (get_window ());
-
-        display.change_property (xid, display.intern_atom ("_NET_WM_STRUT_PARTIAL", false), X.XA_CARDINAL,
-                                 32, X.PropMode.Replace, (uchar[]) struts, struts.length);
-        display.change_property (xid, display.intern_atom ("_NET_WM_STRUT", false), X.XA_CARDINAL,
-                                 32, X.PropMode.Replace, (uchar[]) first_struts, first_struts.length);
-    }
-
     private void panel_resize (bool redraw) {
-        Gdk.Rectangle monitor_dimensions;
-
         monitor_num = screen.get_primary_monitor ();
         screen.get_monitor_geometry (monitor_num, out monitor_dimensions);
 
@@ -433,17 +422,18 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
             }
         }
 
-        panel_x = monitor_dimensions.x;
+        Gtk.Allocation size;
+        get_allocation(out size);
+
+        panel_width = 1;
+        panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width - 32;
         panel_y = monitor_dimensions.y;
-        panel_width = monitor_dimensions.width;
 
         move (panel_x, panel_y + panel_displacement);
         shadow.move (panel_x, panel_y + panel_height + panel_displacement);
 
-        this.set_size_request (panel_width, -1);
+        this.set_size_request (-1, 24);
         shadow.set_size_request (panel_width, SHADOW_SIZE);
-
-        set_struts ();
 
         if (redraw)
             queue_draw ();

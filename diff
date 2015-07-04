@@ -1,0 +1,2491 @@
+=== modified file 'CMakeLists.txt'
+--- CMakeLists.txt	2013-06-09 20:24:16 +0000
++++ CMakeLists.txt	2015-07-04 06:50:57 +0000
+@@ -1,6 +1,6 @@
+ # Check http://webdev.elementaryos.org/docs/developer-guide/cmake for documentation
+ 
+-project (wingpanel)
++project (wingpanel-slim)
+ cmake_minimum_required (VERSION 2.8)
+ cmake_policy (VERSION 2.8)
+ 
+@@ -13,9 +13,9 @@
+ enable_testing ()
+ 
+ set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
+-set (PKGDATADIR "${DATADIR}/wingpanel")
+-set (GETTEXT_PACKAGE "wingpanel")
+-set (EXEC_NAME "wingpanel")
++set (PKGDATADIR "${DATADIR}/wingpanel-slim")
++set (GETTEXT_PACKAGE "wingpanel-slim")
++set (EXEC_NAME "wingpanel-slim")
+ set (RELEASE_NAME "Luna")
+ set (VERSION "0.2.3")
+ set (VERSION_INFO "luna")
+@@ -40,8 +40,8 @@
+ pkg_check_modules (DEPS_NOVALA REQUIRED ${WINGPANEL_DEPS_NOVALA})
+ 
+ # Static Files
+-file (GLOB desktop_entry "${CMAKE_CURRENT_SOURCE_DIR}/data/wingpanel.desktop")
+-file (GLOB icon "${CMAKE_CURRENT_SOURCE_DIR}/data/wingpanel.svg")
++file (GLOB desktop_entry "${CMAKE_CURRENT_SOURCE_DIR}/data/wingpanel-slim.desktop")
++file (GLOB icon "${CMAKE_CURRENT_SOURCE_DIR}/data/wingpanel-slim.svg")
+ 
+ # Find the Indicator Directory
+ execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} indicator3-0.4 --variable=indicatordir OUTPUT_VARIABLE current_indicatordir OUTPUT_STRIP_TRAILING_WHITESPACE)
+@@ -76,17 +76,19 @@
+ 
+     src/Widgets/Panel.vala
+     src/Widgets/BasePanel.vala
++    src/Widgets/AppButtonPanel.vala
++    src/Widgets/AppsButton.vala
+     src/Widgets/PanelShadow.vala
+     src/Widgets/IndicatorButton.vala
+-    src/Widgets/AppsButton.vala
+     src/Widgets/MenuBar.vala
+     src/Widgets/IndicatorMenubar.vala
+     src/Widgets/StyleClass.vala
+ 
+     src/Services/Settings.vala
++    src/Services/IndicatorSorter.vala
+     src/Services/AppLauncherService.vala
+     src/Services/LauncherRunner.vala
+-    src/Services/IndicatorSorter.vala
++
+ PACKAGES
+ 	${WINGPANEL_DEPS}
+ CUSTOM_VAPIS
+@@ -98,7 +100,7 @@
+ 
+ # Settings Schema
+ include (GSettings)
+-add_schema ("org.pantheon.desktop.wingpanel.gschema.xml")
++add_schema ("org.pantheon.desktop.wingpanel-slim.gschema.xml")
+ 
+ # Add Translation Support
+ add_subdirectory (po)
+
+=== added file 'data/wingpanel-slim.desktop'
+--- data/wingpanel-slim.desktop	1970-01-01 00:00:00 +0000
++++ data/wingpanel-slim.desktop	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,12 @@
++[Desktop Entry]
++Name=Wingpanel-slim
++Comment=A super sexy space-saving top panel
++Exec=wingpanel-slim
++Icon=wingpanel
++Terminal=false
++Type=Application
++Categories=Utility;
++NoDisplay=true
++X-Ubuntu-Gettext-Domain=wingpanel-slim
++X-GNOME-Autostart-Notify=false
++X-GNOME-AutoRestart=true
+
+=== added file 'data/wingpanel-slim.svg'
+--- data/wingpanel-slim.svg	1970-01-01 00:00:00 +0000
++++ data/wingpanel-slim.svg	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,356 @@
++<?xml version="1.0" encoding="UTF-8" standalone="no"?>
++<!-- Created with Inkscape (http://www.inkscape.org/) -->
++
++<svg
++   xmlns:dc="http://purl.org/dc/elements/1.1/"
++   xmlns:cc="http://creativecommons.org/ns#"
++   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
++   xmlns:svg="http://www.w3.org/2000/svg"
++   xmlns="http://www.w3.org/2000/svg"
++   xmlns:xlink="http://www.w3.org/1999/xlink"
++   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
++   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
++   width="48px"
++   height="48px"
++   id="svg3142"
++   version="1.1"
++   inkscape:version="0.48.2 r9819"
++   sodipodi:docname="desktop.svg">
++  <defs
++     id="defs3144">
++    <linearGradient
++       id="linearGradient3707-319-631-407-324">
++      <stop
++         id="stop3760"
++         style="stop-color:#185f9a;stop-opacity:1;"
++         offset="0" />
++      <stop
++         id="stop3762"
++         style="stop-color:#599ec9;stop-opacity:1;"
++         offset="1" />
++    </linearGradient>
++    <linearGradient
++       inkscape:collect="always"
++       xlink:href="#linearGradient3707-319-631-407-1-846-5-4-5"
++       id="linearGradient3057"
++       gradientUnits="userSpaceOnUse"
++       gradientTransform="matrix(-0.4,0,0,0.4,24.345184,29.400001)"
++       x1="19.874987"
++       y1="38.245197"
++       x2="19.874987"
++       y2="-61.256123" />
++    <linearGradient
++       id="linearGradient3707-319-631-407-1-846-5-4-5">
++      <stop
++         id="stop3788-4-8-9"
++         style="stop-color:#365a7c;stop-opacity:1"
++         offset="0" />
++      <stop
++         id="stop3790-2-1-9"
++         style="stop-color:#5ea1ca;stop-opacity:1;"
++         offset="1" />
++    </linearGradient>
++    <linearGradient
++       inkscape:collect="always"
++       xlink:href="#linearGradient8265-821-176-38-919-66-249-7-7"
++       id="linearGradient3568"
++       gradientUnits="userSpaceOnUse"
++       gradientTransform="matrix(0.91182027,0,0,0.97592526,2.0736565,6.4253091)"
++       x1="16.626165"
++       y1="15.298182"
++       x2="20.054544"
++       y2="24.627615" />
++    <linearGradient
++       id="linearGradient8265-821-176-38-919-66-249-7-7">
++      <stop
++         offset="0"
++         style="stop-color:#ffffff;stop-opacity:1"
++         id="stop2687-1-9" />
++      <stop
++         offset="1"
++         style="stop-color:#ffffff;stop-opacity:0"
++         id="stop2689-5-4" />
++    </linearGradient>
++    <linearGradient
++       inkscape:collect="always"
++       xlink:href="#linearGradient3924"
++       id="linearGradient2959"
++       gradientUnits="userSpaceOnUse"
++       gradientTransform="matrix(1.1081081,0,0,0.81081075,-2.5945903,9.0405486)"
++       x1="23.99999"
++       y1="4.999989"
++       x2="23.99999"
++       y2="43" />
++    <linearGradient
++       id="linearGradient3924">
++      <stop
++         offset="0"
++         style="stop-color:#ffffff;stop-opacity:1;"
++         id="stop3926" />
++      <stop
++         id="stop3928"
++         style="stop-color:#ffffff;stop-opacity:0.23529412;"
++         offset="0.06316455" />
++      <stop
++         offset="0.95056331"
++         style="stop-color:#ffffff;stop-opacity:0.15686275;"
++         id="stop3930" />
++      <stop
++         offset="1"
++         style="stop-color:#ffffff;stop-opacity:0.39215687;"
++         id="stop3932" />
++    </linearGradient>
++    <radialGradient
++       r="19.99999"
++       fy="8.4497671"
++       fx="7.4956832"
++       cy="8.4497671"
++       cx="7.4956832"
++       gradientTransform="matrix(2.142113e-8,2.33699,-2.7258215,-4.3056275e-8,47.032679,-11.434799)"
++       gradientUnits="userSpaceOnUse"
++       id="radialGradient2874"
++       xlink:href="#linearGradient2867-449-88-871-390-598-476-591-434-148-57-177"
++       inkscape:collect="always" />
++    <linearGradient
++       id="linearGradient2867-449-88-871-390-598-476-591-434-148-57-177">
++      <stop
++         id="stop3750"
++         style="stop-color:#90dbec;stop-opacity:1;"
++         offset="0" />
++      <stop
++         id="stop3752"
++         style="stop-color:#55c1ec;stop-opacity:1;"
++         offset="0.26238" />
++      <stop
++         id="stop3754"
++         style="stop-color:#3689e6;stop-opacity:1;"
++         offset="0.704952" />
++      <stop
++         id="stop3756"
++         style="stop-color:#2b63a0;stop-opacity:1;"
++         offset="1" />
++    </linearGradient>
++    <linearGradient
++       y2="3.8990016"
++       x2="24"
++       y1="44"
++       x1="24"
++       gradientTransform="matrix(1.1025641,0,0,1,-2.4615371,1)"
++       gradientUnits="userSpaceOnUse"
++       id="linearGradient2876"
++       xlink:href="#linearGradient3707-319-631-407-324"
++       inkscape:collect="always" />
++    <radialGradient
++       inkscape:collect="always"
++       xlink:href="#linearGradient3688-166-749"
++       id="radialGradient3013"
++       gradientUnits="userSpaceOnUse"
++       gradientTransform="matrix(2.003784,0,0,1.4,27.98813,-17.4)"
++       cx="4.9929786"
++       cy="43.5"
++       fx="4.9929786"
++       fy="43.5"
++       r="2.5" />
++    <linearGradient
++       id="linearGradient3688-166-749">
++      <stop
++         offset="0"
++         style="stop-color:#181818;stop-opacity:1"
++         id="stop2883" />
++      <stop
++         offset="1"
++         style="stop-color:#181818;stop-opacity:0"
++         id="stop2885" />
++    </linearGradient>
++    <radialGradient
++       inkscape:collect="always"
++       xlink:href="#linearGradient3688-464-309"
++       id="radialGradient3015"
++       gradientUnits="userSpaceOnUse"
++       gradientTransform="matrix(2.003784,0,0,1.4,-20.01187,-104.4)"
++       cx="4.9929786"
++       cy="43.5"
++       fx="4.9929786"
++       fy="43.5"
++       r="2.5" />
++    <linearGradient
++       id="linearGradient3688-464-309">
++      <stop
++         offset="0"
++         style="stop-color:#181818;stop-opacity:1"
++         id="stop2889" />
++      <stop
++         offset="1"
++         style="stop-color:#181818;stop-opacity:0"
++         id="stop2891" />
++    </linearGradient>
++    <linearGradient
++       id="linearGradient3702-501-757">
++      <stop
++         offset="0"
++         style="stop-color:#181818;stop-opacity:0"
++         id="stop2895" />
++      <stop
++         offset="0.5"
++         style="stop-color:#181818;stop-opacity:1"
++         id="stop2897" />
++      <stop
++         offset="1"
++         style="stop-color:#181818;stop-opacity:0"
++         id="stop2899" />
++    </linearGradient>
++    <linearGradient
++       y2="39.999443"
++       x2="25.058096"
++       y1="47.027729"
++       x1="25.058096"
++       gradientUnits="userSpaceOnUse"
++       id="linearGradient3140"
++       xlink:href="#linearGradient3702-501-757"
++       inkscape:collect="always" />
++    <linearGradient
++       id="linearGradient2867-449-88-871-390-598-476-591-434-148-57-177-641-289-620-227-114-444-680-744-4-9-395-147">
++      <stop
++         id="stop12762"
++         style="stop-color:#ababab;stop-opacity:1;"
++         offset="0" />
++      <stop
++         id="stop12764"
++         style="stop-color:#878787;stop-opacity:1;"
++         offset="0.26238" />
++      <stop
++         id="stop12766"
++         style="stop-color:#525252;stop-opacity:1;"
++         offset="0.704952" />
++      <stop
++         id="stop12768"
++         style="stop-color:#282828;stop-opacity:1;"
++         offset="1" />
++    </linearGradient>
++    <linearGradient
++       id="linearGradient3707-319-631-407-324-616-674-812-821-107-178-392-400-6-8-495-345">
++      <stop
++         id="stop12772"
++         style="stop-color:#202020;stop-opacity:1;"
++         offset="0" />
++      <stop
++         id="stop12774"
++         style="stop-color:#383838;stop-opacity:1;"
++         offset="1" />
++    </linearGradient>
++    <radialGradient
++       inkscape:collect="always"
++       xlink:href="#linearGradient2867-449-88-871-390-598-476-591-434-148-57-177-641-289-620-227-114-444-680-744-4-9-395-147"
++       id="radialGradient3175"
++       gradientUnits="userSpaceOnUse"
++       gradientTransform="matrix(0,0.23593076,-2.472257,-2.1138983e-7,42.89011,9.994915)"
++       cx="-19.401712"
++       cy="8.4497671"
++       fx="-19.401712"
++       fy="8.4497671"
++       r="19.99999" />
++    <linearGradient
++       inkscape:collect="always"
++       xlink:href="#linearGradient3707-319-631-407-324-616-674-812-821-107-178-392-400-6-8-495-345"
++       id="linearGradient3191"
++       gradientUnits="userSpaceOnUse"
++       gradientTransform="matrix(1.0000001,0,0,0.09907395,-1.9999974,11.190284)"
++       x1="26.009357"
++       y1="38.958607"
++       x2="26.009357"
++       y2="-59.863522" />
++  </defs>
++  <sodipodi:namedview
++     id="base"
++     pagecolor="#ffffff"
++     bordercolor="#666666"
++     borderopacity="1.0"
++     inkscape:pageopacity="0.0"
++     inkscape:pageshadow="2"
++     inkscape:zoom="11.479167"
++     inkscape:cx="24"
++     inkscape:cy="24"
++     inkscape:current-layer="layer1"
++     showgrid="true"
++     inkscape:grid-bbox="true"
++     inkscape:document-units="px"
++     inkscape:window-width="1280"
++     inkscape:window-height="753"
++     inkscape:window-x="0"
++     inkscape:window-y="24"
++     inkscape:window-maximized="1" />
++  <metadata
++     id="metadata3147">
++    <rdf:RDF>
++      <cc:Work
++         rdf:about="">
++        <dc:format>image/svg+xml</dc:format>
++        <dc:type
++           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
++        <dc:title></dc:title>
++      </cc:Work>
++    </rdf:RDF>
++  </metadata>
++  <g
++     id="layer1"
++     inkscape:label="Layer 1"
++     inkscape:groupmode="layer">
++    <g
++       style="opacity:0.4"
++       id="g3712"
++       transform="matrix(1.1578952,0,0,0.57142859,-3.789484,19.142856)">
++      <rect
++         style="fill:url(#radialGradient3013);fill-opacity:1;stroke:none"
++         id="rect2801"
++         y="40"
++         x="38"
++         height="7"
++         width="5" />
++      <rect
++         style="fill:url(#radialGradient3015);fill-opacity:1;stroke:none"
++         id="rect3696"
++         transform="scale(-1,-1)"
++         y="-47"
++         x="-10"
++         height="7"
++         width="5" />
++      <rect
++         style="fill:url(#linearGradient3140);fill-opacity:1;stroke:none"
++         id="rect3700"
++         y="40"
++         x="10"
++         height="7.0000005"
++         width="28" />
++    </g>
++    <rect
++       style="color:#000000;fill:url(#radialGradient2874);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient2876);stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
++       id="rect5505-21"
++       y="5.5"
++       x="2.5"
++       ry="2"
++       rx="2"
++       height="39"
++       width="43" />
++    <rect
++       style="opacity:0.5;fill:none;stroke:url(#linearGradient2959);stroke-width:1.00000072;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
++       id="rect6741"
++       y="13.5"
++       x="3.5"
++       ry="0.99999988"
++       rx="0.99999994"
++       height="29.999998"
++       width="41" />
++    <path
++       inkscape:connector-curvature="0"
++       style="opacity:0.2;fill:url(#linearGradient3568);fill-opacity:1;fill-rule:evenodd;stroke:none"
++       id="path3333"
++       d="M 4.3450132,12 C 3.5943294,12 3,12.684349 3,13.35 L 3.0139755,30 C 4.2222136,29.981876 44.08292,23.364818 45,23.046532 L 45,13.35 C 45,12.841197 44.412903,12 43.76289,12 L 4.3450184,12 z"
++       sodipodi:nodetypes="ccccccc" />
++    <path
++       style="color:#000000;fill:url(#radialGradient3175);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3191);stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
++       d="m 4.5,5.5 c -1.108,0 -2,0.892 -2,2 l 0,5 43,0 0,-5 c 0,-1.108 -0.892,-2 -2,-2 z"
++       id="rect5505-21-6"
++       inkscape:connector-curvature="0"
++       sodipodi:nodetypes="sccccss" />
++  </g>
++</svg>
+
+=== removed file 'data/wingpanel.desktop'
+--- data/wingpanel.desktop	2012-10-17 19:56:56 +0000
++++ data/wingpanel.desktop	1970-01-01 00:00:00 +0000
+@@ -1,12 +0,0 @@
+-[Desktop Entry]
+-Name=Wingpanel
+-Comment=A super sexy space-saving top panel
+-Exec=wingpanel
+-Icon=wingpanel
+-Terminal=false
+-Type=Application
+-Categories=Utility;
+-NoDisplay=true
+-X-Ubuntu-Gettext-Domain=wingpanel
+-X-GNOME-Autostart-Notify=false
+-X-GNOME-AutoRestart=true
+
+=== removed file 'data/wingpanel.svg'
+--- data/wingpanel.svg	2012-02-22 14:29:18 +0000
++++ data/wingpanel.svg	1970-01-01 00:00:00 +0000
+@@ -1,356 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+-
+-<svg
+-   xmlns:dc="http://purl.org/dc/elements/1.1/"
+-   xmlns:cc="http://creativecommons.org/ns#"
+-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+-   xmlns:svg="http://www.w3.org/2000/svg"
+-   xmlns="http://www.w3.org/2000/svg"
+-   xmlns:xlink="http://www.w3.org/1999/xlink"
+-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+-   width="48px"
+-   height="48px"
+-   id="svg3142"
+-   version="1.1"
+-   inkscape:version="0.48.2 r9819"
+-   sodipodi:docname="desktop.svg">
+-  <defs
+-     id="defs3144">
+-    <linearGradient
+-       id="linearGradient3707-319-631-407-324">
+-      <stop
+-         id="stop3760"
+-         style="stop-color:#185f9a;stop-opacity:1;"
+-         offset="0" />
+-      <stop
+-         id="stop3762"
+-         style="stop-color:#599ec9;stop-opacity:1;"
+-         offset="1" />
+-    </linearGradient>
+-    <linearGradient
+-       inkscape:collect="always"
+-       xlink:href="#linearGradient3707-319-631-407-1-846-5-4-5"
+-       id="linearGradient3057"
+-       gradientUnits="userSpaceOnUse"
+-       gradientTransform="matrix(-0.4,0,0,0.4,24.345184,29.400001)"
+-       x1="19.874987"
+-       y1="38.245197"
+-       x2="19.874987"
+-       y2="-61.256123" />
+-    <linearGradient
+-       id="linearGradient3707-319-631-407-1-846-5-4-5">
+-      <stop
+-         id="stop3788-4-8-9"
+-         style="stop-color:#365a7c;stop-opacity:1"
+-         offset="0" />
+-      <stop
+-         id="stop3790-2-1-9"
+-         style="stop-color:#5ea1ca;stop-opacity:1;"
+-         offset="1" />
+-    </linearGradient>
+-    <linearGradient
+-       inkscape:collect="always"
+-       xlink:href="#linearGradient8265-821-176-38-919-66-249-7-7"
+-       id="linearGradient3568"
+-       gradientUnits="userSpaceOnUse"
+-       gradientTransform="matrix(0.91182027,0,0,0.97592526,2.0736565,6.4253091)"
+-       x1="16.626165"
+-       y1="15.298182"
+-       x2="20.054544"
+-       y2="24.627615" />
+-    <linearGradient
+-       id="linearGradient8265-821-176-38-919-66-249-7-7">
+-      <stop
+-         offset="0"
+-         style="stop-color:#ffffff;stop-opacity:1"
+-         id="stop2687-1-9" />
+-      <stop
+-         offset="1"
+-         style="stop-color:#ffffff;stop-opacity:0"
+-         id="stop2689-5-4" />
+-    </linearGradient>
+-    <linearGradient
+-       inkscape:collect="always"
+-       xlink:href="#linearGradient3924"
+-       id="linearGradient2959"
+-       gradientUnits="userSpaceOnUse"
+-       gradientTransform="matrix(1.1081081,0,0,0.81081075,-2.5945903,9.0405486)"
+-       x1="23.99999"
+-       y1="4.999989"
+-       x2="23.99999"
+-       y2="43" />
+-    <linearGradient
+-       id="linearGradient3924">
+-      <stop
+-         offset="0"
+-         style="stop-color:#ffffff;stop-opacity:1;"
+-         id="stop3926" />
+-      <stop
+-         id="stop3928"
+-         style="stop-color:#ffffff;stop-opacity:0.23529412;"
+-         offset="0.06316455" />
+-      <stop
+-         offset="0.95056331"
+-         style="stop-color:#ffffff;stop-opacity:0.15686275;"
+-         id="stop3930" />
+-      <stop
+-         offset="1"
+-         style="stop-color:#ffffff;stop-opacity:0.39215687;"
+-         id="stop3932" />
+-    </linearGradient>
+-    <radialGradient
+-       r="19.99999"
+-       fy="8.4497671"
+-       fx="7.4956832"
+-       cy="8.4497671"
+-       cx="7.4956832"
+-       gradientTransform="matrix(2.142113e-8,2.33699,-2.7258215,-4.3056275e-8,47.032679,-11.434799)"
+-       gradientUnits="userSpaceOnUse"
+-       id="radialGradient2874"
+-       xlink:href="#linearGradient2867-449-88-871-390-598-476-591-434-148-57-177"
+-       inkscape:collect="always" />
+-    <linearGradient
+-       id="linearGradient2867-449-88-871-390-598-476-591-434-148-57-177">
+-      <stop
+-         id="stop3750"
+-         style="stop-color:#90dbec;stop-opacity:1;"
+-         offset="0" />
+-      <stop
+-         id="stop3752"
+-         style="stop-color:#55c1ec;stop-opacity:1;"
+-         offset="0.26238" />
+-      <stop
+-         id="stop3754"
+-         style="stop-color:#3689e6;stop-opacity:1;"
+-         offset="0.704952" />
+-      <stop
+-         id="stop3756"
+-         style="stop-color:#2b63a0;stop-opacity:1;"
+-         offset="1" />
+-    </linearGradient>
+-    <linearGradient
+-       y2="3.8990016"
+-       x2="24"
+-       y1="44"
+-       x1="24"
+-       gradientTransform="matrix(1.1025641,0,0,1,-2.4615371,1)"
+-       gradientUnits="userSpaceOnUse"
+-       id="linearGradient2876"
+-       xlink:href="#linearGradient3707-319-631-407-324"
+-       inkscape:collect="always" />
+-    <radialGradient
+-       inkscape:collect="always"
+-       xlink:href="#linearGradient3688-166-749"
+-       id="radialGradient3013"
+-       gradientUnits="userSpaceOnUse"
+-       gradientTransform="matrix(2.003784,0,0,1.4,27.98813,-17.4)"
+-       cx="4.9929786"
+-       cy="43.5"
+-       fx="4.9929786"
+-       fy="43.5"
+-       r="2.5" />
+-    <linearGradient
+-       id="linearGradient3688-166-749">
+-      <stop
+-         offset="0"
+-         style="stop-color:#181818;stop-opacity:1"
+-         id="stop2883" />
+-      <stop
+-         offset="1"
+-         style="stop-color:#181818;stop-opacity:0"
+-         id="stop2885" />
+-    </linearGradient>
+-    <radialGradient
+-       inkscape:collect="always"
+-       xlink:href="#linearGradient3688-464-309"
+-       id="radialGradient3015"
+-       gradientUnits="userSpaceOnUse"
+-       gradientTransform="matrix(2.003784,0,0,1.4,-20.01187,-104.4)"
+-       cx="4.9929786"
+-       cy="43.5"
+-       fx="4.9929786"
+-       fy="43.5"
+-       r="2.5" />
+-    <linearGradient
+-       id="linearGradient3688-464-309">
+-      <stop
+-         offset="0"
+-         style="stop-color:#181818;stop-opacity:1"
+-         id="stop2889" />
+-      <stop
+-         offset="1"
+-         style="stop-color:#181818;stop-opacity:0"
+-         id="stop2891" />
+-    </linearGradient>
+-    <linearGradient
+-       id="linearGradient3702-501-757">
+-      <stop
+-         offset="0"
+-         style="stop-color:#181818;stop-opacity:0"
+-         id="stop2895" />
+-      <stop
+-         offset="0.5"
+-         style="stop-color:#181818;stop-opacity:1"
+-         id="stop2897" />
+-      <stop
+-         offset="1"
+-         style="stop-color:#181818;stop-opacity:0"
+-         id="stop2899" />
+-    </linearGradient>
+-    <linearGradient
+-       y2="39.999443"
+-       x2="25.058096"
+-       y1="47.027729"
+-       x1="25.058096"
+-       gradientUnits="userSpaceOnUse"
+-       id="linearGradient3140"
+-       xlink:href="#linearGradient3702-501-757"
+-       inkscape:collect="always" />
+-    <linearGradient
+-       id="linearGradient2867-449-88-871-390-598-476-591-434-148-57-177-641-289-620-227-114-444-680-744-4-9-395-147">
+-      <stop
+-         id="stop12762"
+-         style="stop-color:#ababab;stop-opacity:1;"
+-         offset="0" />
+-      <stop
+-         id="stop12764"
+-         style="stop-color:#878787;stop-opacity:1;"
+-         offset="0.26238" />
+-      <stop
+-         id="stop12766"
+-         style="stop-color:#525252;stop-opacity:1;"
+-         offset="0.704952" />
+-      <stop
+-         id="stop12768"
+-         style="stop-color:#282828;stop-opacity:1;"
+-         offset="1" />
+-    </linearGradient>
+-    <linearGradient
+-       id="linearGradient3707-319-631-407-324-616-674-812-821-107-178-392-400-6-8-495-345">
+-      <stop
+-         id="stop12772"
+-         style="stop-color:#202020;stop-opacity:1;"
+-         offset="0" />
+-      <stop
+-         id="stop12774"
+-         style="stop-color:#383838;stop-opacity:1;"
+-         offset="1" />
+-    </linearGradient>
+-    <radialGradient
+-       inkscape:collect="always"
+-       xlink:href="#linearGradient2867-449-88-871-390-598-476-591-434-148-57-177-641-289-620-227-114-444-680-744-4-9-395-147"
+-       id="radialGradient3175"
+-       gradientUnits="userSpaceOnUse"
+-       gradientTransform="matrix(0,0.23593076,-2.472257,-2.1138983e-7,42.89011,9.994915)"
+-       cx="-19.401712"
+-       cy="8.4497671"
+-       fx="-19.401712"
+-       fy="8.4497671"
+-       r="19.99999" />
+-    <linearGradient
+-       inkscape:collect="always"
+-       xlink:href="#linearGradient3707-319-631-407-324-616-674-812-821-107-178-392-400-6-8-495-345"
+-       id="linearGradient3191"
+-       gradientUnits="userSpaceOnUse"
+-       gradientTransform="matrix(1.0000001,0,0,0.09907395,-1.9999974,11.190284)"
+-       x1="26.009357"
+-       y1="38.958607"
+-       x2="26.009357"
+-       y2="-59.863522" />
+-  </defs>
+-  <sodipodi:namedview
+-     id="base"
+-     pagecolor="#ffffff"
+-     bordercolor="#666666"
+-     borderopacity="1.0"
+-     inkscape:pageopacity="0.0"
+-     inkscape:pageshadow="2"
+-     inkscape:zoom="11.479167"
+-     inkscape:cx="24"
+-     inkscape:cy="24"
+-     inkscape:current-layer="layer1"
+-     showgrid="true"
+-     inkscape:grid-bbox="true"
+-     inkscape:document-units="px"
+-     inkscape:window-width="1280"
+-     inkscape:window-height="753"
+-     inkscape:window-x="0"
+-     inkscape:window-y="24"
+-     inkscape:window-maximized="1" />
+-  <metadata
+-     id="metadata3147">
+-    <rdf:RDF>
+-      <cc:Work
+-         rdf:about="">
+-        <dc:format>image/svg+xml</dc:format>
+-        <dc:type
+-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+-        <dc:title></dc:title>
+-      </cc:Work>
+-    </rdf:RDF>
+-  </metadata>
+-  <g
+-     id="layer1"
+-     inkscape:label="Layer 1"
+-     inkscape:groupmode="layer">
+-    <g
+-       style="opacity:0.4"
+-       id="g3712"
+-       transform="matrix(1.1578952,0,0,0.57142859,-3.789484,19.142856)">
+-      <rect
+-         style="fill:url(#radialGradient3013);fill-opacity:1;stroke:none"
+-         id="rect2801"
+-         y="40"
+-         x="38"
+-         height="7"
+-         width="5" />
+-      <rect
+-         style="fill:url(#radialGradient3015);fill-opacity:1;stroke:none"
+-         id="rect3696"
+-         transform="scale(-1,-1)"
+-         y="-47"
+-         x="-10"
+-         height="7"
+-         width="5" />
+-      <rect
+-         style="fill:url(#linearGradient3140);fill-opacity:1;stroke:none"
+-         id="rect3700"
+-         y="40"
+-         x="10"
+-         height="7.0000005"
+-         width="28" />
+-    </g>
+-    <rect
+-       style="color:#000000;fill:url(#radialGradient2874);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient2876);stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+-       id="rect5505-21"
+-       y="5.5"
+-       x="2.5"
+-       ry="2"
+-       rx="2"
+-       height="39"
+-       width="43" />
+-    <rect
+-       style="opacity:0.5;fill:none;stroke:url(#linearGradient2959);stroke-width:1.00000072;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+-       id="rect6741"
+-       y="13.5"
+-       x="3.5"
+-       ry="0.99999988"
+-       rx="0.99999994"
+-       height="29.999998"
+-       width="41" />
+-    <path
+-       inkscape:connector-curvature="0"
+-       style="opacity:0.2;fill:url(#linearGradient3568);fill-opacity:1;fill-rule:evenodd;stroke:none"
+-       id="path3333"
+-       d="M 4.3450132,12 C 3.5943294,12 3,12.684349 3,13.35 L 3.0139755,30 C 4.2222136,29.981876 44.08292,23.364818 45,23.046532 L 45,13.35 C 45,12.841197 44.412903,12 43.76289,12 L 4.3450184,12 z"
+-       sodipodi:nodetypes="ccccccc" />
+-    <path
+-       style="color:#000000;fill:url(#radialGradient3175);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3191);stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+-       d="m 4.5,5.5 c -1.108,0 -2,0.892 -2,2 l 0,5 43,0 0,-5 c 0,-1.108 -0.892,-2 -2,-2 z"
+-       id="rect5505-21-6"
+-       inkscape:connector-curvature="0"
+-       sodipodi:nodetypes="sccccss" />
+-  </g>
+-</svg>
+
+=== added directory 'debian'
+=== added file 'debian/changelog'
+--- debian/changelog	1970-01-01 00:00:00 +0000
++++ debian/changelog	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,17 @@
++wingpanel (0.2.3) precise; urgency=low
++
++  * New upstream release.
++
++ -- Cody Garver <cody@elementaryos.org>  Sun, 09 Jun 2013 15:26:46 -0500
++
++wingpanel (0.2.2) precise; urgency=low
++
++  * New upstream release.
++
++ -- Cody Garver <cody@elementaryos.org>  Wed, 17 Apr 2013 14:58:56 -0500
++
++wingpanel (0.1) oneiric; urgency=low
++
++  * Initial Release.
++
++ -- Sergey "Shnatsel" Davidoff <shnatsel@gmail.com>  Sat, 09 Jul 2011 00:28:25 +0400
+
+=== added file 'debian/compat'
+--- debian/compat	1970-01-01 00:00:00 +0000
++++ debian/compat	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,1 @@
++7
+
+=== added file 'debian/control'
+--- debian/control	1970-01-01 00:00:00 +0000
++++ debian/control	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,46 @@
++Source: wingpanel-slim
++Section: x11
++Priority: extra
++Maintainer: Sergey "Shnatsel" Davidoff <shnatsel@gmail.com>
++Build-Depends: cmake (>= 2.8),
++               debhelper (>= 7.0.50~),
++               libgee-dev,
++               libglib2.0-dev (>= 2.28),
++               libgranite-dev,
++               libgtk-3-dev,
++               libindicator3-dev (>= 0.3.90),
++               valac-0.16 | valac (>= 0.16)
++Standards-Version: 3.9.3
++Homepage: https://launchpad.net/wingpanel
++Vcs-Bzr: https://code.launchpad.net/~wingpanel-devs/wingpanel/wingpanel-gtk3
++Vcs-Browser: http://bazaar.launchpad.net/~wingpanel-devs/wingpanel/wingpanel-gtk3/files
++
++Package: wingpanel-slim
++Architecture: any
++Depends: ${misc:Depends}, ${shlibs:Depends}
++Pre-Depends: dpkg (>= 1.15.6)
++Recommends: indicator-application,
++            indicator-datetime,
++            indicator-me,
++            indicator-messages,
++            indicator-session,
++            indicator-sound
++Provides: indicator-renderer
++Description: A super sexy space-saving top panel
++ A replacement for the traditional GNOME Panel, designed to be a lightweight
++ container for system/application indicators and notification icons.
++ Designed by elementary Project.
++
++Package: wingpanel-slim-dbg
++Architecture: any
++Section: debug
++Priority: extra
++Depends: wingpanel-slim (= ${binary:Version}), ${misc:Depends}
++Pre-Depends: dpkg (>= 1.15.6)
++Enhances: wingpanel
++Description: A super sexy space-saving top panel (debugging symbols)
++ A replacement for the traditional GNOME Panel, designed to be a lightweight
++ container for system/application indicators and notification icons.
++ Designed by elementary Project.
++ .
++ This package contains debugging symbols for wingpanel.
+
+=== added file 'debian/copyright'
+--- debian/copyright	1970-01-01 00:00:00 +0000
++++ debian/copyright	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,40 @@
++This work was packaged for Debian by:
++
++    Sergey "Shnatsel" Davidoff <shnatsel@gmail.com> on Sat, 09 Jul 2011 00:28:25 +0400
++
++It was downloaded from:
++
++    https://launchpad.net/wingpanel
++
++Upstream Author(s):
++
++    Maxwell Barvian <maxwell@elementaryos.org>
++    ammonkey <am.monkeyd@gmail.com>
++
++Copyright:
++
++    Copyright (C) 2011 elementary developers
++
++License:
++
++    This program is free software: you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation, either version 3 of the License, or
++    (at your option) any later version.
++
++    This package is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with this program. If not, see <http://www.gnu.org/licenses/>.
++
++On Debian systems, the complete text of the GNU General
++Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
++
++The Debian packaging is:
++
++    Copyright (C) 2011 Sergey "Shnatsel" Davidoff <shnatsel@gmail.com>
++
++and is licensed under the GPL version 3, see above.
+
+=== added file 'debian/rules'
+--- debian/rules	1970-01-01 00:00:00 +0000
++++ debian/rules	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,22 @@
++#!/usr/bin/make -f
++# -*- makefile -*-
++# Sample debian/rules that uses debhelper.
++# This file was originally written by Joey Hess and Craig Small.
++# As a special exception, when this file is copied by dh-make into a
++# dh-make output file, you may use that output file without restriction.
++# This special exception was added by Craig Small in version 0.37 of dh-make.
++
++# Uncomment this to turn on verbose mode.
++#export DH_VERBOSE=1
++
++%:
++	dh $@ 
++
++override_dh_strip:
++	dh_strip --dbg-package=wingpanel-slim-dbg
++
++override_dh_auto_install:
++	dh_auto_install --destdir=debian/wingpanel-slim
++
++override_dh_builddeb:
++	dh_builddeb -- -Zxz
+
+=== added directory 'debian/source'
+=== added file 'debian/source/format'
+--- debian/source/format	1970-01-01 00:00:00 +0000
++++ debian/source/format	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,1 @@
++3.0 (native)
+
+=== added file 'org.pantheon.desktop.wingpanel-slim.gschema.xml'
+--- org.pantheon.desktop.wingpanel-slim.gschema.xml	1970-01-01 00:00:00 +0000
++++ org.pantheon.desktop.wingpanel-slim.gschema.xml	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,49 @@
++<schemalist>
++	<enum id="wingpanel-slim-position-types">
++        <value nick="Flush Left" value="3" />
++		<value nick="Elementary Left" value="0" />
++		<value nick="Middle" value="1" />
++		<value nick="Elementary Right" value="2" />
++        <value nick="Flush Right" value="4" />
++	</enum>
++	<enum id="wingpanel-slim-edge-types">
++        <value nick="Slanted" value="0" />
++		<value nick="Squared" value="1" />
++		<value nick="Curved 1" value="2" />
++        <value nick="Curved 2" value="3" />
++        <value nick="Curved 3" value="4" />
++	</enum>
++	<schema path="/org/pantheon/desktop/wingpanel-slim/" id="org.pantheon.desktop.wingpanel-slim" gettext-domain="wingpanel-slim">
++		<key type="as" name="blacklist">
++			<default>[ 'libappmenu.so' ]</default>
++			<summary>List of indicators.</summary>
++			<description>These indicators will not be displayed in Wingpanel.</description>
++		</key>
++		<key name="panel-position" enum="wingpanel-slim-position-types">
++			<default>"Elementary Right"</default>
++			<summary>The position of the panel.</summary>
++			<description>The position of the panel.</description>
++		</key>
++        <key name="panel-edge" enum="wingpanel-slim-edge-types">
++			<default>"Slanted"</default>
++			<summary>The edge shape of the panel.</summary>
++			<description>The edge shape of the panel.</description>
++		</key>
++        <key type="b" name="auto-hide">
++            <default>false</default>
++            <summary>Hide the panel when not in use</summary>
++            <description>Hide the panel when not in use</description>
++        </key>
++        <key type="b" name="show-launcher">
++			<default>true</default>
++			<summary>Wheather to show the Applications Launcher or not.</summary>
++			<description>Wheather to show the Applications Launcher or not.</description>
++		</key>
++		<key type="s" name="default-launcher">
++			<default>"slingshot-launcher"</default>
++			<summary>The default program to use as App launcher.</summary>
++			<description>Description</description>
++		</key>
++
++	</schema>
++</schemalist>
+
+=== removed file 'org.pantheon.desktop.wingpanel.gschema.xml'
+--- org.pantheon.desktop.wingpanel.gschema.xml	2012-07-08 03:02:36 +0000
++++ org.pantheon.desktop.wingpanel.gschema.xml	1970-01-01 00:00:00 +0000
+@@ -1,19 +0,0 @@
+-<schemalist>	
+-	<schema path="/org/pantheon/desktop/wingpanel/" id="org.pantheon.desktop.wingpanel" gettext-domain="wingpanel">
+-		<key type="as" name="blacklist">
+-			<default>[ 'libappmenu.so' ]</default>
+-			<summary>List of indicators.</summary>
+-			<description>These indicators will not be displayed in Wingpanel.</description>
+-		</key>
+-		<key type="b" name="show-launcher">
+-			<default>true</default>
+-			<summary>Wheather to show the Applications Launcher or not.</summary>
+-			<description>Wheather to show the Applications Launcher or not.</description>
+-		</key>
+-		<key type="s" name="default-launcher">
+-			<default>"slingshot-launcher"</default>
+-			<summary>The default program to use as App launcher.</summary>
+-			<description>Description</description>
+-		</key>
+-	</schema>
+-</schemalist>
+
+=== modified file 'po/CMakeLists.txt'
+--- po/CMakeLists.txt	2011-11-03 21:52:50 +0000
++++ po/CMakeLists.txt	2015-07-04 06:50:57 +0000
+@@ -1,7 +1,7 @@
+ # Translations
+ include (Translations)
+-add_translations_directory ("wingpanel")
+-add_translations_catalog ("wingpanel"
++add_translations_directory ("wingpanel-slim")
++add_translations_catalog ("wingpanel-slim"
+     ../src/Widgets
+     ../src/Services
+     ../src
+
+=== added file 'po/wingpanel-slim.pot'
+--- po/wingpanel-slim.pot	1970-01-01 00:00:00 +0000
++++ po/wingpanel-slim.pot	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,23 @@
++# SOME DESCRIPTIVE TITLE.
++# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
++# This file is distributed under the same license as the PACKAGE package.
++# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
++#
++#, fuzzy
++msgid ""
++msgstr ""
++"Project-Id-Version: PACKAGE VERSION\n"
++"Report-Msgid-Bugs-To: \n"
++"POT-Creation-Date: 2012-05-06 22:41+0200\n"
++"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
++"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
++"Language-Team: LANGUAGE <LL@li.org>\n"
++"Language: \n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=CHARSET\n"
++"Content-Transfer-Encoding: 8bit\n"
++
++#: /home/fabian/dev/wingpanel/po/../src/Widgets/AppsButton.vala:36
++#, c-format
++msgid "Applications"
++msgstr ""
+
+=== removed file 'po/wingpanel.pot'
+--- po/wingpanel.pot	2012-05-06 20:45:51 +0000
++++ po/wingpanel.pot	1970-01-01 00:00:00 +0000
+@@ -1,23 +0,0 @@
+-# SOME DESCRIPTIVE TITLE.
+-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+-# This file is distributed under the same license as the PACKAGE package.
+-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+-#
+-#, fuzzy
+-msgid ""
+-msgstr ""
+-"Project-Id-Version: PACKAGE VERSION\n"
+-"Report-Msgid-Bugs-To: \n"
+-"POT-Creation-Date: 2012-05-06 22:41+0200\n"
+-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+-"Language-Team: LANGUAGE <LL@li.org>\n"
+-"Language: \n"
+-"MIME-Version: 1.0\n"
+-"Content-Type: text/plain; charset=CHARSET\n"
+-"Content-Transfer-Encoding: 8bit\n"
+-
+-#: /home/fabian/dev/wingpanel/po/../src/Widgets/AppsButton.vala:36
+-#, c-format
+-msgid "Applications"
+-msgstr ""
+
+=== modified file 'src/Indicator/IndicatorObjectEntry.vala'
+--- src/Indicator/IndicatorObjectEntry.vala	2013-05-24 21:17:01 +0000
++++ src/Indicator/IndicatorObjectEntry.vala	2015-07-04 06:50:57 +0000
+@@ -72,6 +72,9 @@
+             set_submenu (entry.menu);
+ 
+             setup_drawing ();
++
++            entry.menu.get_children ().foreach (setup_margin);
++            entry.menu.insert.connect (setup_margin);
+         }
+ 
+         public IndicatorIface get_indicator () {
+@@ -82,6 +85,11 @@
+             return entry.name_hint ?? "";
+         }
+ 
++        private void setup_margin (Gtk.Widget widget) {
++            widget.margin_left = 10;
++            widget.margin_right = 9;
++        }
++
+         private void setup_drawing () {
+             setup_entry_menu_parent ();
+ 
+@@ -105,22 +113,9 @@
+             menu_parent.app_paintable = true;
+             menu_parent.set_visual (Gdk.Screen.get_default ().get_rgba_visual ());
+ 
+-            menu_parent.size_allocate.connect (entry_menu_parent_size_allocate);
+             menu_parent.draw.connect (entry_menu_parent_draw_callback);
+         }
+ 
+-        private void entry_menu_parent_size_allocate (Gtk.Allocation alloc) {
+-            /* entry.menu.margin_left = 10;
+-               entry.menu.margin_right = 9;
+-               FIXME => This is what we want to get, but to solve spacing issues we do this: */
+-
+-            entry.menu.get_children ().foreach ((c) => {
+-                // make sure it is always right
+-                c.margin_left = 10;
+-                c.margin_right = 9;
+-            });
+-        }
+-
+         private bool entry_menu_parent_draw_callback (Cairo.Context ctx) {
+             var new_w  = entry.menu.get_parent ().get_allocated_width ();
+             var new_h = entry.menu.get_parent ().get_allocated_height ();
+@@ -160,7 +155,7 @@
+             // now paint our buffer on
+             ctx.set_source_surface (buffer.surface, 0, 0);
+             ctx.paint ();
+-            
++
+             return false;
+         }
+ 
+@@ -192,7 +187,7 @@
+ 
+             buffer.context.arc (x + w - radius, y + h - radius, radius, 0, Math.PI * 0.5);
+             buffer.context.arc (x + radius, y + h - radius, radius, Math.PI * 0.5, Math.PI);
+-            
++
+             buffer.context.close_path ();
+         }
+ 
+
+=== added file 'src/Services/AppLauncherService.vala'
+--- src/Services/AppLauncherService.vala	1970-01-01 00:00:00 +0000
++++ src/Services/AppLauncherService.vala	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,112 @@
++// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
++//  
++//  Copyright (C) 2011-2012 Wingpanel Developers
++// 
++//  This program is free software: you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation, either version 3 of the License, or
++//  (at your option) any later version.
++// 
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++// 
++//  You should have received a copy of the GNU General Public License
++//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
++//
++
++namespace Wingpanel.Services {
++
++    [DBus (name = "org.pantheon.desktop.AppLauncherService")]
++    interface AppLauncherIface : Object {
++        public signal void visibility_changed (bool launcher_visible);
++    }
++
++    public class AppLauncherService : Object {
++        const string SERVICE_NAME = "org.pantheon.desktop.AppLauncherService";
++        const string SERVICE_PATH = "/org/pantheon/desktop/AppLauncherService";
++
++        public signal void launcher_state_changed (bool active);
++        public bool launcher_active { get; private set; default = false; }
++
++        private bool connected = false;
++        private AppLauncherIface? launcher_proxy = null;
++        uint watch = -1;
++
++        private LauncherRunner launcher_runner;
++
++        private Settings settings;
++
++        public AppLauncherService (Settings settings) {
++            this.settings = settings;
++
++            launcher_runner = new LauncherRunner (settings);
++
++            // Add watch
++            watch = Bus.watch_name (BusType.SESSION,
++                                    SERVICE_NAME,
++                                    BusNameWatcherFlags.NONE,
++                                    on_name_appeared,
++                                    on_name_vanished);
++        }
++
++        private void on_name_appeared (DBusConnection conn, string name) {
++            connect_to_server ();
++        }
++
++        private void on_name_vanished (DBusConnection conn, string name) {
++            disconnect_server ();
++            launcher_state_changed (false);
++        }
++
++        public void launch_launcher () {
++            if (!spawn_launcher_process ())
++                return;
++
++            if (!connected)
++                connect_to_server ();
++        }
++
++        private bool spawn_launcher_process () {
++            return launcher_runner.execute ();
++        }
++
++        private bool connect_to_server () {
++            if (connected)
++                return true;
++
++            // Connect to the server
++            if (launcher_proxy == null) {
++                try {
++                    launcher_proxy = Bus.get_proxy_sync (BusType.SESSION, SERVICE_NAME, SERVICE_PATH);
++                } catch (IOError e) {
++                    critical ("Could not connect to AppLauncherService: %s", e.message);
++                    launcher_proxy = null;
++                    return_val_if_reached (false);
++                }
++            }
++
++            connected = true;
++
++            debug ("Connected to AppLauncherService");
++
++            // Connect signal handler
++            launcher_proxy.visibility_changed.connect (on_launcher_visibility_change);
++
++            return true;
++        }
++
++        private void disconnect_server () {
++            connected = false;
++            launcher_proxy = null;
++        }
++
++        private void on_launcher_visibility_change (AppLauncherIface proxy, bool visible) {
++            return_if_fail (connected);
++
++            this.launcher_active = visible;
++            this.launcher_state_changed (visible);
++        }
++    }
++}
+
+=== removed file 'src/Services/AppLauncherService.vala'
+--- src/Services/AppLauncherService.vala	2013-04-14 07:54:25 +0000
++++ src/Services/AppLauncherService.vala	1970-01-01 00:00:00 +0000
+@@ -1,112 +0,0 @@
+-// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
+-//  
+-//  Copyright (C) 2011-2012 Wingpanel Developers
+-// 
+-//  This program is free software: you can redistribute it and/or modify
+-//  it under the terms of the GNU General Public License as published by
+-//  the Free Software Foundation, either version 3 of the License, or
+-//  (at your option) any later version.
+-// 
+-//  This program is distributed in the hope that it will be useful,
+-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-//  GNU General Public License for more details.
+-// 
+-//  You should have received a copy of the GNU General Public License
+-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-//
+-
+-namespace Wingpanel.Services {
+-
+-    [DBus (name = "org.pantheon.desktop.AppLauncherService")]
+-    interface AppLauncherIface : Object {
+-        public signal void visibility_changed (bool launcher_visible);
+-    }
+-
+-    public class AppLauncherService : Object {
+-        const string SERVICE_NAME = "org.pantheon.desktop.AppLauncherService";
+-        const string SERVICE_PATH = "/org/pantheon/desktop/AppLauncherService";
+-
+-        public signal void launcher_state_changed (bool active);
+-        public bool launcher_active { get; private set; default = false; }
+-
+-        private bool connected = false;
+-        private AppLauncherIface? launcher_proxy = null;
+-        uint watch = -1;
+-
+-        private LauncherRunner launcher_runner;
+-
+-        private Settings settings;
+-
+-        public AppLauncherService (Settings settings) {
+-            this.settings = settings;
+-
+-            launcher_runner = new LauncherRunner (settings);
+-
+-            // Add watch
+-            watch = Bus.watch_name (BusType.SESSION,
+-                                    SERVICE_NAME,
+-                                    BusNameWatcherFlags.NONE,
+-                                    on_name_appeared,
+-                                    on_name_vanished);
+-        }
+-
+-        private void on_name_appeared (DBusConnection conn, string name) {
+-            connect_to_server ();
+-        }
+-
+-        private void on_name_vanished (DBusConnection conn, string name) {
+-            disconnect_server ();
+-            launcher_state_changed (false);
+-        }
+-
+-        public void launch_launcher () {
+-            if (!spawn_launcher_process ())
+-                return;
+-
+-            if (!connected)
+-                connect_to_server ();
+-        }
+-
+-        private bool spawn_launcher_process () {
+-            return launcher_runner.execute ();
+-        }
+-
+-        private bool connect_to_server () {
+-            if (connected)
+-                return true;
+-
+-            // Connect to the server
+-            if (launcher_proxy == null) {
+-                try {
+-                    launcher_proxy = Bus.get_proxy_sync (BusType.SESSION, SERVICE_NAME, SERVICE_PATH);
+-                } catch (IOError e) {
+-                    critical ("Could not connect to AppLauncherService: %s", e.message);
+-                    launcher_proxy = null;
+-                    return_val_if_reached (false);
+-                }
+-            }
+-
+-            connected = true;
+-
+-            debug ("Connected to AppLauncherService");
+-
+-            // Connect signal handler
+-            launcher_proxy.visibility_changed.connect (on_launcher_visibility_change);
+-
+-            return true;
+-        }
+-
+-        private void disconnect_server () {
+-            connected = false;
+-            launcher_proxy = null;
+-        }
+-
+-        private void on_launcher_visibility_change (AppLauncherIface proxy, bool visible) {
+-            return_if_fail (connected);
+-
+-            this.launcher_active = visible;
+-            this.launcher_state_changed (visible);
+-        }
+-    }
+-}
+
+=== modified file 'src/Services/IndicatorSorter.vala'
+--- src/Services/IndicatorSorter.vala	2013-04-14 10:19:10 +0000
++++ src/Services/IndicatorSorter.vala	2015-07-04 06:50:57 +0000
+@@ -29,6 +29,7 @@
+     }
+ 
+     private const IndicatorOrderNode[] DEFAULT_ORDER = {
++        { "libdatetime.so", null },                      // date time widget
+         { "libapplication.so", null },                   // indicator-application (App indicators)
+         { "libapplication.so", "keyboard" },             // Keyboard layout selector (old)
+         { "libapplication.so", "gsd-keyboard-xkb" },     // keyboard layout selector
+
+=== added file 'src/Services/LauncherRunner.vala'
+--- src/Services/LauncherRunner.vala	1970-01-01 00:00:00 +0000
++++ src/Services/LauncherRunner.vala	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,73 @@
++// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
++//  
++//  Copyright (C) 2012-2013 Wingpanel Developers
++// 
++//  This program is free software: you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation, either version 3 of the License, or
++//  (at your option) any later version.
++// 
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++// 
++//  You should have received a copy of the GNU General Public License
++//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
++//
++
++public class Wingpanel.Services.LauncherRunner {
++    private Settings settings;
++    
++    public LauncherRunner (Settings settings) {
++        this.settings = settings;
++    }
++
++    public bool execute () {
++        debug ("Starting launcher");
++
++        // Parse Arguments
++        string[] argvp = null;
++        string launcher_command = settings.default_launcher;
++
++        try {
++            Shell.parse_argv (launcher_command, out argvp);
++        } catch (ShellError error) {
++            warning ("Not passing any args to %s : %s", launcher_command, error.message);
++            argvp = {launcher_command, null}; // fix value in case it's corrupted
++        }
++
++        // Check if the program is actually there
++        string? launcher = Environment.find_program_in_path (argvp[0]);
++
++        if (launcher != null) {
++            // Spawn process asynchronously
++            try {
++                var flags = SpawnFlags.SEARCH_PATH
++                          | SpawnFlags.DO_NOT_REAP_CHILD
++                          | SpawnFlags.STDOUT_TO_DEV_NULL;
++
++                Pid process_id;
++                Process.spawn_async (null, argvp, null, flags, null, out process_id);
++
++                // Add watch or otherwise the process will become a zombie
++                ChildWatch.add (process_id, dispose_process);
++            } catch (SpawnError err) {
++                warning ("Couldn't spawn launcher: %s", err.message);
++                return_val_if_reached (false);
++            }
++        } else {
++            run_fallback_launcher ();
++        }
++
++        return true;
++    }
++
++    private static void dispose_process (Pid pid, int status) {
++        Process.close_pid (pid);
++    }
++
++    private static void run_fallback_launcher () {
++        Granite.Services.System.open_uri ("file:///usr/share/applications");
++    }
++}
+
+=== removed file 'src/Services/LauncherRunner.vala'
+--- src/Services/LauncherRunner.vala	2013-04-14 07:54:25 +0000
++++ src/Services/LauncherRunner.vala	1970-01-01 00:00:00 +0000
+@@ -1,73 +0,0 @@
+-// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
+-//  
+-//  Copyright (C) 2012-2013 Wingpanel Developers
+-// 
+-//  This program is free software: you can redistribute it and/or modify
+-//  it under the terms of the GNU General Public License as published by
+-//  the Free Software Foundation, either version 3 of the License, or
+-//  (at your option) any later version.
+-// 
+-//  This program is distributed in the hope that it will be useful,
+-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-//  GNU General Public License for more details.
+-// 
+-//  You should have received a copy of the GNU General Public License
+-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-//
+-
+-public class Wingpanel.Services.LauncherRunner {
+-    private Settings settings;
+-    
+-    public LauncherRunner (Settings settings) {
+-        this.settings = settings;
+-    }
+-
+-    public bool execute () {
+-        debug ("Starting launcher");
+-
+-        // Parse Arguments
+-        string[] argvp = null;
+-        string launcher_command = settings.default_launcher;
+-
+-        try {
+-            Shell.parse_argv (launcher_command, out argvp);
+-        } catch (ShellError error) {
+-            warning ("Not passing any args to %s : %s", launcher_command, error.message);
+-            argvp = {launcher_command, null}; // fix value in case it's corrupted
+-        }
+-
+-        // Check if the program is actually there
+-        string? launcher = Environment.find_program_in_path (argvp[0]);
+-
+-        if (launcher != null) {
+-            // Spawn process asynchronously
+-            try {
+-                var flags = SpawnFlags.SEARCH_PATH
+-                          | SpawnFlags.DO_NOT_REAP_CHILD
+-                          | SpawnFlags.STDOUT_TO_DEV_NULL;
+-
+-                Pid process_id;
+-                Process.spawn_async (null, argvp, null, flags, null, out process_id);
+-
+-                // Add watch or otherwise the process will become a zombie
+-                ChildWatch.add (process_id, dispose_process);
+-            } catch (SpawnError err) {
+-                warning ("Couldn't spawn launcher: %s", err.message);
+-                return_val_if_reached (false);
+-            }
+-        } else {
+-            run_fallback_launcher ();
+-        }
+-
+-        return true;
+-    }
+-
+-    private static void dispose_process (Pid pid, int status) {
+-        Process.close_pid (pid);
+-    }
+-
+-    private static void run_fallback_launcher () {
+-        Granite.Services.System.open_uri ("file:///usr/share/applications");
+-    }
+-}
+
+=== modified file 'src/Services/Settings.vala'
+--- src/Services/Settings.vala	2013-04-14 07:54:25 +0000
++++ src/Services/Settings.vala	2015-07-04 06:50:57 +0000
+@@ -20,12 +20,33 @@
+ 
+ namespace Wingpanel.Services {
+     public class Settings : Granite.Services.Settings {
++
++        public enum WingpanelSlimPanelPosition {
++            LEFT = 0,
++            MIDDLE = 1,
++            RIGHT = 2,
++            FLUSH_LEFT = 3,
++            FLUSH_RIGHT = 4
++        }
++        public WingpanelSlimPanelPosition panel_position { get; set; }
++        
++        public enum WingpanelSlimPanelEdge {
++            SLANTED = 0,
++            SQUARED = 1,
++            CURVED_1 = 2,
++            CURVED_2 = 3,
++            CURVED_3 = 4
++        }
++        public WingpanelSlimPanelEdge panel_edge { get; set; }
++        
++        
+         public string[] blacklist { get; set; }
++        public bool auto_hide { get; set; }
+         public bool show_launcher { get; set; }
+         public string default_launcher { get; set; }
+ 
+         public Settings () {
+-            base ("org.pantheon.desktop.wingpanel");
++            base ("org.pantheon.desktop.wingpanel-slim");
+         }
+     }
+ }
+
+=== added file 'src/Widgets/AppButtonPanel.vala'
+--- src/Widgets/AppButtonPanel.vala	1970-01-01 00:00:00 +0000
++++ src/Widgets/AppButtonPanel.vala	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,154 @@
++// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
++/***
++  BEGIN LICENSE
++
++  Copyright (C) 2011-2012 Wingpanel Developers
++  This program is free software: you can redistribute it and/or modify it
++  under the terms of the GNU Lesser General Public License version 3, as published
++  by the Free Software Foundation.
++
++  This program is distributed in the hope that it will be useful, but
++  WITHOUT ANY WARRANTY; without even the implied warranties of
++  MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
++  PURPOSE.  See the GNU General Public License for more details.
++
++  You should have received a copy of the GNU General Public License along
++  with this program.  If not, see <http://www.gnu.org/licenses/>
++
++  END LICENSE
++***/
++
++namespace Wingpanel.Widgets {
++
++    public class AppButtonPanel : BasePanel {
++        private Gtk.Box container;
++        
++        private AppsButton apps_button;
++        private MenuBar menubar;
++        private Services.Settings settings;
++        
++
++        public AppButtonPanel (WingpanelApp app, Services.Settings settings) {
++            set_application (app as Gtk.Application);
++            
++            this.settings = settings;
++            this.settings.changed.connect (on_settings_update);
++            on_settings_update();
++
++            container = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
++            container.set_homogeneous (false);
++     
++            add (container);
++
++            var style_context = get_style_context ();
++            style_context.add_class (StyleClass.PANEL);
++            style_context.add_class (Gtk.STYLE_CLASS_MENUBAR);
++
++            // Add default widgets
++            add_defaults (settings);
++        }
++
++        protected override Gtk.StyleContext get_draw_style_context () {
++            return menubar.get_style_context ();
++        }
++
++        private void add_defaults (Services.Settings settings) {            
++            // Menubar for storing the button
++            menubar = new MenuBar ();
++            apps_button = new Widgets.AppsButton (settings);
++            
++            
++            apps_button.state_flags_changed.connect(apps_state_changed);
++            
++            menubar.append (apps_button);
++            container.pack_end(menubar, false, false, panel_padding);
++        }
++    
++        private void apps_state_changed(){
++            submenu_drawn = apps_button.active;
++            
++            // Hack: "encourage" the menu to reevaluate if it needs to auto hide
++            if (!submenu_drawn){
++                mouse_left(Gdk.EventCrossing ());
++            }
++        }
++        
++        public override bool draw (Cairo.Context cr) {
++            base.draw(cr);
++            draw_background(cr);
++            
++            // force move it to the top left; no customization here
++            panel_x = monitor_dimensions.x + 32;
++            move (panel_x, panel_y + panel_displacement);
++            
++            return true;
++        }
++    
++    
++        private bool draw_background (Cairo.Context context) {
++            Gtk.Allocation size;
++            get_allocation (out size);
++        
++            // bg is already drawn by the css file, we need to specify which areas should be hidden
++            draw_mask(context, 0, 0, size.width, size.height, panel_padding);
++            context.clip ();
++        
++            context.set_source_rgba (1.0, 0.0, 0.0, 0.0);
++            context.set_operator (Cairo.Operator.SOURCE);
++            context.paint ();
++        
++            return true;
++        }
++            
++    
++        private void draw_mask(Cairo.Context context, double x, double y, double width, double height, double clip_amount) {
++            // This shape is what will be erased
++            context.move_to (x, y);
++
++            if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_LEFT)
++                context.move_to (x, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SLANTED)
++                context.line_to (x + clip_amount, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SQUARED)
++                context.line_to (x, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_1)
++                context.curve_to (x + clip_amount, y, x, y + height-1, x + clip_amount, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_2)
++                context.curve_to (x, y, x + clip_amount, y, x + clip_amount, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_3)
++                context.curve_to (x, y + height - (clip_amount / 2) , x + (clip_amount / 2), y + height, x + clip_amount, y + height-1);
++            
++            context.line_to (x + width - clip_amount, y + height-1);
++            
++            if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_RIGHT)
++                context.line_to (x + width, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SLANTED)
++                context.line_to (x + width, y);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SQUARED)
++                context.line_to (x + width, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_1)
++                context.curve_to (x + width, y + height-1, x + width - clip_amount, y, x + width, y);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_2)
++                context.curve_to (x + width - clip_amount, y + height-1, x + width - clip_amount, y, x + width, y);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_3)
++                context.curve_to (x + width - (clip_amount / 2), y + height-1, x + width, y + height-1 - (clip_amount / 2), x + width, y);
++                
++            context.line_to (x + width, y + height);
++            context.line_to (x, y + height);
++            context.line_to (x, y);
++        }
++        
++        
++        private void on_settings_update () {
++            this.panel_position = settings.panel_position;
++            this.panel_edge = settings.panel_edge;
++            this.auto_hide = settings.auto_hide;
++            
++            if (auto_hide)
++                queue_move_out ();
++            else
++                first_run = true;
++            queue_draw ();
++        }
++    }
++}
+
+=== added file 'src/Widgets/AppsButton.vala'
+--- src/Widgets/AppsButton.vala	1970-01-01 00:00:00 +0000
++++ src/Widgets/AppsButton.vala	2015-07-04 06:50:57 +0000
+@@ -0,0 +1,89 @@
++// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
++//  
++//  Copyright (C) 2011-2012 Wingpanel Developers
++// 
++//  This program is free software: you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation, either version 3 of the License, or
++//  (at your option) any later version.
++// 
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++// 
++//  You should have received a copy of the GNU General Public License
++//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
++//
++
++namespace Wingpanel.Widgets {
++
++    public class AppsButton : IndicatorButton {
++        private bool _active = false;
++        public bool active {
++            get {
++                return _active;
++            }
++            set {
++                _active = value;
++                update_state_flags ();
++            }
++        }
++
++        private Services.AppLauncherService? launcher_service = null;
++        private Services.Settings settings;
++
++        public AppsButton (Services.Settings settings) {
++            this.settings = settings;
++            this.can_focus = true;
++
++            set_widget (WidgetSlot.LABEL, new Gtk.Label (_("Applications")));
++            active = false;
++
++            get_style_context ().add_class (StyleClass.APP_BUTTON);
++
++            launcher_service = new Services.AppLauncherService (settings);
++            launcher_service.launcher_state_changed.connect (on_launcher_state_changed);
++
++            on_settings_update ();
++            settings.changed.connect (on_settings_update);
++        }
++
++        private void on_launcher_state_changed (bool visible) {
++            debug ("Launcher visibility changed to %s", visible.to_string ());
++            active = visible;
++        }
++
++        public override bool button_press_event (Gdk.EventButton event) {
++            launcher_service.launch_launcher ();
++            return true;
++        }
++
++        /**
++         * Make sure the menuitem appears to be selected even if the focus moves
++         * to the client launcher app being displayed.
++         */
++        public override void state_flags_changed (Gtk.StateFlags flags) {
++            update_state_flags ();
++        }
++
++        private void update_state_flags () {
++            const Gtk.StateFlags ACTIVE_FLAGS = Gtk.StateFlags.PRELIGHT;
++
++            if (active)
++                set_state_flags (ACTIVE_FLAGS, true);
++            else
++                unset_state_flags (ACTIVE_FLAGS);
++        }
++
++        private void on_settings_update () {
++            bool visible = settings.show_launcher;
++            set_no_show_all (!visible);
++
++            if (visible)
++                show_all ();
++            else
++                hide ();
++        }
++    }
++}
+
+=== removed file 'src/Widgets/AppsButton.vala'
+--- src/Widgets/AppsButton.vala	2013-04-14 10:19:10 +0000
++++ src/Widgets/AppsButton.vala	1970-01-01 00:00:00 +0000
+@@ -1,89 +0,0 @@
+-// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
+-//  
+-//  Copyright (C) 2011-2012 Wingpanel Developers
+-// 
+-//  This program is free software: you can redistribute it and/or modify
+-//  it under the terms of the GNU General Public License as published by
+-//  the Free Software Foundation, either version 3 of the License, or
+-//  (at your option) any later version.
+-// 
+-//  This program is distributed in the hope that it will be useful,
+-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-//  GNU General Public License for more details.
+-// 
+-//  You should have received a copy of the GNU General Public License
+-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-//
+-
+-namespace Wingpanel.Widgets {
+-
+-    public class AppsButton : IndicatorButton {
+-        private bool _active = false;
+-        public bool active {
+-            get {
+-                return _active;
+-            }
+-            set {
+-                _active = value;
+-                update_state_flags ();
+-            }
+-        }
+-
+-        private Services.AppLauncherService? launcher_service = null;
+-        private Services.Settings settings;
+-
+-        public AppsButton (Services.Settings settings) {
+-            this.settings = settings;
+-            this.can_focus = true;
+-
+-            set_widget (WidgetSlot.LABEL, new Gtk.Label (_("Applications")));
+-            active = false;
+-
+-            get_style_context ().add_class (StyleClass.APP_BUTTON);
+-
+-            launcher_service = new Services.AppLauncherService (settings);
+-            launcher_service.launcher_state_changed.connect (on_launcher_state_changed);
+-
+-            on_settings_update ();
+-            settings.changed.connect (on_settings_update);
+-        }
+-
+-        private void on_launcher_state_changed (bool visible) {
+-            debug ("Launcher visibility changed to %s", visible.to_string ());
+-            active = visible;
+-        }
+-
+-        public override bool button_press_event (Gdk.EventButton event) {
+-            launcher_service.launch_launcher ();
+-            return true;
+-        }
+-
+-        /**
+-         * Make sure the menuitem appears to be selected even if the focus moves
+-         * to the client launcher app being displayed.
+-         */
+-        public override void state_flags_changed (Gtk.StateFlags flags) {
+-            update_state_flags ();
+-        }
+-
+-        private void update_state_flags () {
+-            const Gtk.StateFlags ACTIVE_FLAGS = Gtk.StateFlags.PRELIGHT;
+-
+-            if (active)
+-                set_state_flags (ACTIVE_FLAGS, true);
+-            else
+-                unset_state_flags (ACTIVE_FLAGS);
+-        }
+-
+-        private void on_settings_update () {
+-            bool visible = settings.show_launcher;
+-            set_no_show_all (!visible);
+-
+-            if (visible)
+-                show_all ();
+-            else
+-                hide ();
+-        }
+-    }
+-}
+
+=== modified file 'src/Widgets/BasePanel.vala'
+--- src/Widgets/BasePanel.vala	2013-04-14 07:54:25 +0000
++++ src/Widgets/BasePanel.vala	2015-07-04 06:50:57 +0000
+@@ -14,6 +14,7 @@
+ // 
+ //  You should have received a copy of the GNU General Public License
+ //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
++using Gdk;
+ 
+ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
+     private enum Struts {
+@@ -34,13 +35,29 @@
+ 
+     private const int SHADOW_SIZE = 4;
+ 
++    // Positioning & Shape
+     private int panel_height = 0;
+-    private int panel_x;
+-    private int panel_y;
++    protected int panel_x;
++    protected int panel_y;
+     private int panel_width;
+-    private int panel_displacement = -40;
+-    private uint animation_timer = 0;
+-
++    protected int panel_displacement = 0;
++    protected int panel_padding = 10;
++    protected Gdk.Rectangle monitor_dimensions;
++    protected Services.Settings.WingpanelSlimPanelEdge panel_edge = Services.Settings.WingpanelSlimPanelEdge.SLANTED;
++    protected Services.Settings.WingpanelSlimPanelPosition panel_position = Services.Settings.WingpanelSlimPanelPosition.RIGHT;
++    
++    
++    // Auto-hide & first animation
++    protected bool auto_hide = false;
++    protected bool first_run = true;
++    protected bool submenu_drawn = false;
++    private bool mouse_inside = false;
++    private uint mouse_out_count = 0;
++    private uint slide_in_timer = 0;
++    private uint slide_out_timer = 0;
++    private uint slide_out_delay = 0;
++    
++    
+     private PanelShadow shadow = new PanelShadow ();
+ 
+     public BasePanel () {
+@@ -56,7 +73,12 @@
+         // Update the panel size on screen size or monitor changes
+         screen.size_changed.connect (on_monitors_changed);
+         screen.monitors_changed.connect (on_monitors_changed);
+-
++        
++        // Watch for mouse
++        add_events(EventMask.ENTER_NOTIFY_MASK | EventMask.LEAVE_NOTIFY_MASK);
++        enter_notify_event.connect(mouse_entered);
++        leave_notify_event.connect(mouse_left);
++                
+         destroy.connect (Gtk.main_quit);
+     }
+ 
+@@ -70,21 +92,35 @@
+     public override bool draw (Cairo.Context cr) {
+         Gtk.Allocation size;
+         get_allocation (out size);
++        
++        
++        if (panel_position == Services.Settings.WingpanelSlimPanelPosition.RIGHT)
++            panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width - 32;
++        else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.MIDDLE)
++            panel_x = monitor_dimensions.x + (monitor_dimensions.width / 2) - (size.width / 2);
++        else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.LEFT)
++            panel_x = monitor_dimensions.x + 32;
++        else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_RIGHT)
++            panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width;
++        else if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_LEFT)
++            panel_x = monitor_dimensions.x;
++        
++        move (panel_x, panel_y + panel_displacement);
++
+ 
+         if (panel_height != size.height) {
+             panel_height = size.height;
+             message ("New Panel Height: %i", size.height);
+             shadow.move (panel_x, panel_y + panel_height + panel_displacement);
+-            set_struts ();
+         }
+ 
+         var ctx = get_draw_style_context ();
+         ctx.render_background (cr, size.x, size.y, size.width, size.height);
+-
++        
+         // Slide in
+-        if (animation_timer == 0) {
+-            panel_displacement = -panel_height;
+-            animation_timer = Timeout.add (300 / panel_height, animation_callback);
++        if (first_run) {
++            first_run = false;
++            slide_in_timer = Timeout.add (10, animation_move_in);
+         }
+ 
+         var child = get_child ();
+@@ -94,12 +130,13 @@
+ 
+         if (!shadow.visible)
+             shadow.show_all ();
+-
++            
+         return true;
+     }
+ 
+-    private bool animation_callback () {
++    private bool animation_move_in () {
+         if (panel_displacement >= 0 ) {
++            slide_in_timer = 0;
+             return false;
+         } else {
+             panel_displacement += 1;
+@@ -108,53 +145,76 @@
+             return true;
+         }
+     }
++        
++    private bool animation_move_out () {
++        if (slide_in_timer > 0 || panel_displacement <= -panel_height+1 ) {
++            return false;
++        } else {
++            panel_displacement -= 1;
++            move (panel_x, panel_y + panel_displacement);
++            shadow.move (panel_x, panel_y + panel_height + panel_displacement);
++            return true;
++        }
++    }
++    
++    protected bool queue_move_out () {
++        if (mouse_inside || submenu_drawn) {                            // If the mouse is inside, cancel the move out
++            mouse_out_count = 0;
++            slide_out_delay = 0;
++            return false;
++        } else {                                                        
++            mouse_out_count++;
++            if (mouse_out_count == 100){                                // If we have waited long enough, start the animation and stop the queue
++                mouse_out_count = 0;
++                slide_out_delay = 0;
++                slide_out_timer = Timeout.add(20, animation_move_out);
++                return false;
++            } else if (slide_out_delay == 0) {                          // If this is the first call to this function, start the timer
++                slide_out_delay = Timeout.add(10, queue_move_out);
++                return true;
++            } else {                                                    // keep chugging away
++                return true;
++            }
++        }
++    }
++    
++    
++     public bool mouse_entered(Gdk.EventCrossing e) {
++         if (auto_hide) {
++             mouse_inside = true;
++             slide_in_timer = Timeout.add(10, animation_move_in);
++         }
++         return true;
++    }
++
++    public bool mouse_left(Gdk.EventCrossing e) {
++        if (auto_hide) {
++            mouse_inside = false;
++            queue_move_out ();
++        }
++        return true;
++    }
+ 
+     private void on_monitors_changed () {
+         panel_resize (true);
+     }
+ 
+-    private void set_struts () {
+-        if (!get_realized ())
+-            return;
+-
+-        // Since uchar is 8 bits in vala but the struts are 32 bits
+-        // we have to allocate 4 times as much and do bit-masking
+-        var struts = new ulong[Struts.N_VALUES];
+-
+-        struts[Struts.TOP] = panel_height + panel_y;
+-        struts[Struts.TOP_START] = panel_x;
+-        struts[Struts.TOP_END] = panel_x + panel_width;
+-
+-        var first_struts = new ulong[Struts.BOTTOM + 1];
+-        for (var i = 0; i < first_struts.length; i++)
+-            first_struts[i] = struts[i];
+-
+-        unowned X.Display display = Gdk.X11Display.get_xdisplay (get_display ());
+-        var xid = Gdk.X11Window.get_xid (get_window ());
+-
+-        display.change_property (xid, display.intern_atom ("_NET_WM_STRUT_PARTIAL", false), X.XA_CARDINAL,
+-                                 32, X.PropMode.Replace, (uchar[]) struts, struts.length);
+-        display.change_property (xid, display.intern_atom ("_NET_WM_STRUT", false), X.XA_CARDINAL,
+-                                 32, X.PropMode.Replace, (uchar[]) first_struts, first_struts.length);
+-    }
+-
+     private void panel_resize (bool redraw) {
+-        Gdk.Rectangle monitor_dimensions;
+-
+         screen.get_monitor_geometry (screen.get_primary_monitor(), out monitor_dimensions);
+-
+-        panel_x = monitor_dimensions.x;
++        
++        Gtk.Allocation size;
++        get_allocation (out size);
++        
++        panel_width = 1;
++        panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width - 32;
+         panel_y = monitor_dimensions.y;
+-        panel_width = monitor_dimensions.width;
+ 
+         move (panel_x, panel_y + panel_displacement);
+         shadow.move (panel_x, panel_y + panel_height + panel_displacement);
+ 
+-        this.set_size_request (panel_width, -1);
++        this.set_size_request (-1, 24);
+         shadow.set_size_request (panel_width, SHADOW_SIZE);
+ 
+-        set_struts ();
+-
+         if (redraw)
+             queue_draw ();
+     }
+
+=== modified file 'src/Widgets/IndicatorMenubar.vala'
+--- src/Widgets/IndicatorMenubar.vala	2013-04-19 19:06:09 +0000
++++ src/Widgets/IndicatorMenubar.vala	2015-07-04 06:50:57 +0000
+@@ -18,6 +18,7 @@
+ public class Wingpanel.Widgets.IndicatorMenubar : MenuBar {
+     private List<IndicatorWidget> sorted_items;
+     private bool update_pending = false;
++    public signal void finished_loading ();
+ 
+     public IndicatorMenubar () {
+         sorted_items = new List<IndicatorWidget> ();
+@@ -65,5 +66,6 @@
+     private void append_all_items () {
+         foreach (var widget in sorted_items)
+             append (widget);
++        finished_loading ();
+     }
+ }
+
+=== modified file 'src/Widgets/Panel.vala'
+--- src/Widgets/Panel.vala	2013-04-14 07:54:25 +0000
++++ src/Widgets/Panel.vala	2015-07-04 06:50:57 +0000
+@@ -22,27 +22,24 @@
+ 
+     public class Panel : BasePanel {
+         private Gtk.Box container;
+-        private Gtk.Box left_wrapper;
+-        private Gtk.Box right_wrapper;
+-
++        
+         private IndicatorMenubar menubar;
+-        private MenuBar clock;
+-        private MenuBar apps_menubar;
+-
+         private IndicatorLoader indicator_loader;
++        private Services.Settings settings;
++        
+ 
+         public Panel (WingpanelApp app, Services.Settings settings, IndicatorLoader indicator_loader) {
+             set_application (app as Gtk.Application);
+-
++            
++            this.settings = settings;
++            this.settings.changed.connect (on_settings_update);
++            on_settings_update();
++            
+             this.indicator_loader = indicator_loader;
+ 
+             container = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+-            left_wrapper = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+-            right_wrapper = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+             container.set_homogeneous (false);
+-            left_wrapper.set_homogeneous (false);
+-            right_wrapper.set_homogeneous (false);
+-
++     
+             add (container);
+ 
+             var style_context = get_style_context ();
+@@ -52,6 +49,7 @@
+             // Add default widgets
+             add_defaults (settings);
+ 
++            menubar.finished_loading.connect (on_finished_loading);
+             load_indicators ();
+         }
+ 
+@@ -71,45 +69,130 @@
+ 
+             foreach (var entry in entries)
+                 create_entry (entry);
+-
++                
+             indicator.entry_added.connect (create_entry);
+             indicator.entry_removed.connect (delete_entry);
+         }
+ 
+         private void create_entry (IndicatorWidget entry) {
+-            if (entry.get_indicator ().get_name () == "libdatetime.so")
+-                clock.prepend (entry);
+-            else
+-                menubar.insert_sorted (entry);
+-        }
+-
++            menubar.insert_sorted (entry);
++            
++            var sub_menu = entry.get_submenu();
++            
++            if (sub_menu != null) {
++                sub_menu.show.connect (on_show_sub_menu);
++                sub_menu.hide.connect (on_hide_sub_menu);
++            }
++        }
++        
++        private void on_show_sub_menu(){
++            submenu_drawn = true;
++        }
++        private void on_hide_sub_menu(){
++            submenu_drawn = false;
++        }
++        
++        
+         private void delete_entry (IndicatorWidget entry) {
++            var sub_menu = entry.get_submenu();
++            
++            if (sub_menu != null){
++                sub_menu.show.disconnect (on_show_sub_menu);
++                sub_menu.hide.disconnect (on_hide_sub_menu);
++            }
+             var parent = entry.parent;
+             parent.remove (entry);
+         }
+ 
+-        private void add_defaults (Services.Settings settings) {
+-            // Add Apps button
+-            apps_menubar = new MenuBar ();
+-            var apps_button = new Widgets.AppsButton (settings);
+-            apps_menubar.append (apps_button);
+-
+-            left_wrapper.pack_start (apps_menubar, false, true, 0);
+-
+-            container.pack_start (left_wrapper);
+-
+-            clock = new MenuBar ();
+-            container.pack_start (clock, false, false, 0);
+-
++        private void add_defaults (Services.Settings settings) {            
+             // Menubar for storing indicators
+             menubar = new IndicatorMenubar ();
+-
+-            right_wrapper.pack_end (menubar, false, false, 0);
+-            container.pack_end (right_wrapper);
+-
+-            var gpr = new Gtk.SizeGroup (Gtk.SizeGroupMode.HORIZONTAL);
+-            gpr.add_widget (left_wrapper);
+-            gpr.add_widget (right_wrapper);
++            container.pack_end(menubar, false, false, panel_padding);
++        }
++        
++        private void on_finished_loading(){
++            if (auto_hide){
++                on_hide_sub_menu ();
++                queue_move_out();
++            }
++        }
++        
++    
++        public override bool draw (Cairo.Context cr) {
++            base.draw(cr);
++            draw_background(cr);
++            return true;
++        }
++    
++    
++        private bool draw_background (Cairo.Context context) {
++            Gtk.Allocation size;
++            get_allocation (out size);
++        
++            // bg is already drawn by the css file, we need to specify which areas should be hidden
++            draw_mask(context, 0, 0, size.width, size.height, panel_padding);
++            context.clip ();
++        
++            context.set_source_rgba (1.0, 0.0, 0.0, 0.0);
++            context.set_operator (Cairo.Operator.SOURCE);
++            context.paint ();
++        
++            return true;
++        }
++            
++    
++        private void draw_mask(Cairo.Context context, double x, double y, double width, double height, double clip_amount) {
++            // This shape is what will be erased
++            context.move_to (x, y);
++
++            if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_LEFT)
++                context.move_to (x, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SLANTED)
++                context.line_to (x + clip_amount, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SQUARED)
++                context.line_to (x, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_1)
++                context.curve_to (x + clip_amount, y, x, y + height-1, x + clip_amount, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_2)
++                context.curve_to (x, y, x + clip_amount, y, x + clip_amount, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_3)
++                context.curve_to (x, y + height - (clip_amount / 2) , x + (clip_amount / 2), y + height, x + clip_amount, y + height-1);
++            
++            context.line_to (x + width - clip_amount, y + height-1);
++            
++            if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_RIGHT)
++                context.line_to (x + width, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SLANTED)
++                context.line_to (x + width, y);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SQUARED)
++                context.line_to (x + width, y + height-1);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_1)
++                context.curve_to (x + width, y + height-1, x + width - clip_amount, y, x + width, y);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_2)
++                context.curve_to (x + width - clip_amount, y + height-1, x + width - clip_amount, y, x + width, y);
++            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_3)
++                context.curve_to (x + width - (clip_amount / 2), y + height-1, x + width, y + height-1 - (clip_amount / 2), x + width, y);
++                
++            context.line_to (x + width, y + height);
++            context.line_to (x, y + height);
++            context.line_to (x, y);
++        }
++        
++        
++        private void on_settings_update () {
++            this.panel_position = settings.panel_position;
++            this.panel_edge = settings.panel_edge;
++            this.auto_hide = settings.auto_hide;
++            
++            if (auto_hide){
++                queue_move_out ();
++            }
++            else
++            {
++                first_run = true;
++            }
++                
++            queue_draw ();
+         }
+     }
+ }
+
+=== modified file 'src/WingpanelApp.vala'
+--- src/WingpanelApp.vala	2013-04-14 07:54:25 +0000
++++ src/WingpanelApp.vala	2015-07-04 06:50:57 +0000
+@@ -24,6 +24,7 @@
+         private IndicatorLoader indicator_loader;
+         private Services.Settings settings;
+         private Widgets.BasePanel panel;
++        private Widgets.AppButtonPanel apps_button_panel;
+ 
+         construct {
+             build_data_dir = Build.DATADIR;
+@@ -32,8 +33,8 @@
+             build_version = Build.VERSION;
+             build_version_info = Build.VERSION_INFO;
+ 
+-            program_name = "Wingpanel";
+-            exec_name = "wingpanel";
++            program_name = "Wingpanel-slim";
++            exec_name = "wingpanel-slim";
+             application_id = "net.launchpad.wingpanel";
+         }
+ 
+@@ -47,12 +48,27 @@
+         private void init () {
+             settings = new Services.Settings ();
+             indicator_loader = new Backend.IndicatorFactory (settings);
++            
+             panel = new Widgets.Panel (this, settings, indicator_loader);
+-
+             panel.show_all ();
++
++            apps_button_panel = new Widgets.AppButtonPanel (this, settings);
++
++
++            this.settings.changed.connect (on_settings_update);
++            on_settings_update ();
++        }
++        
++        private void on_settings_update () {
++            if (settings.show_launcher){
++                apps_button_panel.show_all ();
++            } else {
++                apps_button_panel.hide ();
++            }
+         }
+ 
+         public static int main (string[] args) {
++            
+             return new WingpanelApp ().run (args);
+         }
+     }
+

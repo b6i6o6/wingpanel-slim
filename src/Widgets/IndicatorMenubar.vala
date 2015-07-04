@@ -18,6 +18,7 @@
 public class Wingpanel.Widgets.IndicatorMenubar : MenuBar {
     private List<IndicatorWidget> sorted_items;
     private bool update_pending = false;
+    public signal void finished_loading ();
 
     public IndicatorMenubar () {
         sorted_items = new List<IndicatorWidget> ();
@@ -65,5 +66,6 @@ public class Wingpanel.Widgets.IndicatorMenubar : MenuBar {
     private void append_all_items () {
         foreach (var widget in sorted_items)
             append (widget);
+        finished_loading ();
     }
 }

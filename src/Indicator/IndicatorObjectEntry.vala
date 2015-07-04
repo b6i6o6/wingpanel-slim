@@ -72,6 +72,9 @@ namespace Wingpanel.Backend
             set_submenu (entry.menu);
 
             setup_drawing ();
+
+            entry.menu.get_children ().foreach (setup_margin);
+            entry.menu.insert.connect (setup_margin);
         }
 
         public IndicatorIface get_indicator () {
@@ -80,6 +83,11 @@ namespace Wingpanel.Backend
 
         public string get_entry_name () {
             return entry.name_hint ?? "";
+        }
+
+        private void setup_margin (Gtk.Widget widget) {
+            widget.margin_left = 10;
+            widget.margin_right = 9;
         }
 
         private void setup_drawing () {
@@ -105,20 +113,7 @@ namespace Wingpanel.Backend
             menu_parent.app_paintable = true;
             menu_parent.set_visual (Gdk.Screen.get_default ().get_rgba_visual ());
 
-            menu_parent.size_allocate.connect (entry_menu_parent_size_allocate);
             menu_parent.draw.connect (entry_menu_parent_draw_callback);
-        }
-
-        private void entry_menu_parent_size_allocate (Gtk.Allocation alloc) {
-            /* entry.menu.margin_left = 10;
-               entry.menu.margin_right = 9;
-               FIXME => This is what we want to get, but to solve spacing issues we do this: */
-
-            entry.menu.get_children ().foreach ((c) => {
-                // make sure it is always right
-                c.margin_left = 10;
-                c.margin_right = 9;
-            });
         }
 
         private bool entry_menu_parent_draw_callback (Cairo.Context ctx) {
@@ -160,7 +155,7 @@ namespace Wingpanel.Backend
             // now paint our buffer on
             ctx.set_source_surface (buffer.surface, 0, 0);
             ctx.paint ();
-            
+
             return false;
         }
 
@@ -192,7 +187,7 @@ namespace Wingpanel.Backend
 
             buffer.context.arc (x + w - radius, y + h - radius, radius, 0, Math.PI * 0.5);
             buffer.context.arc (x + radius, y + h - radius, radius, Math.PI * 0.5, Math.PI);
-            
+
             buffer.context.close_path ();
         }
 

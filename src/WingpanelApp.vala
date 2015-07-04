@@ -24,6 +24,7 @@ namespace Wingpanel {
         private IndicatorLoader indicator_loader;
         private Services.Settings settings;
         private Widgets.BasePanel panel;
+        private Widgets.AppButtonPanel apps_button_panel;
 
         construct {
             build_data_dir = Build.DATADIR;
@@ -32,8 +33,8 @@ namespace Wingpanel {
             build_version = Build.VERSION;
             build_version_info = Build.VERSION_INFO;
 
-            program_name = "Wingpanel";
-            exec_name = "wingpanel";
+            program_name = "Wingpanel-slim";
+            exec_name = "wingpanel-slim";
             application_id = "net.launchpad.wingpanel";
         }
 
@@ -47,12 +48,27 @@ namespace Wingpanel {
         private void init () {
             settings = new Services.Settings ();
             indicator_loader = new Backend.IndicatorFactory (settings);
+            
             panel = new Widgets.Panel (this, settings, indicator_loader);
-
             panel.show_all ();
+
+            apps_button_panel = new Widgets.AppButtonPanel (this, settings);
+
+
+            this.settings.changed.connect (on_settings_update);
+            on_settings_update ();
+        }
+        
+        private void on_settings_update () {
+            if (settings.show_launcher){
+                apps_button_panel.show_all ();
+            } else {
+                apps_button_panel.hide ();
+            }
         }
 
         public static int main (string[] args) {
+            
             return new WingpanelApp ().run (args);
         }
     }

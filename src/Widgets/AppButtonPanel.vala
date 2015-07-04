@@ -20,22 +20,20 @@
 
 namespace Wingpanel.Widgets {
 
-    public class Panel : BasePanel {
+    public class AppButtonPanel : BasePanel {
         private Gtk.Box container;
         
-        private IndicatorMenubar menubar;
-        private IndicatorLoader indicator_loader;
+        private AppsButton apps_button;
+        private MenuBar menubar;
         private Services.Settings settings;
         
 
-        public Panel (WingpanelApp app, Services.Settings settings, IndicatorLoader indicator_loader) {
+        public AppButtonPanel (WingpanelApp app, Services.Settings settings) {
             set_application (app as Gtk.Application);
             
             this.settings = settings;
             this.settings.changed.connect (on_settings_update);
             on_settings_update();
-            
-            this.indicator_loader = indicator_loader;
 
             container = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             container.set_homogeneous (false);
@@ -48,79 +46,41 @@ namespace Wingpanel.Widgets {
 
             // Add default widgets
             add_defaults (settings);
-
-            menubar.finished_loading.connect (on_finished_loading);
-            load_indicators ();
         }
 
         protected override Gtk.StyleContext get_draw_style_context () {
             return menubar.get_style_context ();
         }
 
-        private void load_indicators () {
-            var indicators = indicator_loader.get_indicators ();
-
-            foreach (var indicator in indicators)
-                load_indicator (indicator);
-        }
-
-        private void load_indicator (IndicatorIface indicator) {
-            var entries = indicator.get_entries ();
-
-            foreach (var entry in entries)
-                create_entry (entry);
-                
-            indicator.entry_added.connect (create_entry);
-            indicator.entry_removed.connect (delete_entry);
-        }
-
-        private void create_entry (IndicatorWidget entry) {
-            menubar.insert_sorted (entry);
-            
-            var sub_menu = entry.get_submenu();
-            
-            if (sub_menu != null) {
-                sub_menu.show.connect (on_show_sub_menu);
-                sub_menu.hide.connect (on_hide_sub_menu);
-            }
-        }
-        
-        private void on_show_sub_menu(){
-            submenu_drawn = true;
-        }
-        private void on_hide_sub_menu(){
-            submenu_drawn = false;
-        }
-        
-        
-        private void delete_entry (IndicatorWidget entry) {
-            var sub_menu = entry.get_submenu();
-            
-            if (sub_menu != null){
-                sub_menu.show.disconnect (on_show_sub_menu);
-                sub_menu.hide.disconnect (on_hide_sub_menu);
-            }
-            var parent = entry.parent;
-            parent.remove (entry);
-        }
-
         private void add_defaults (Services.Settings settings) {            
-            // Menubar for storing indicators
-            menubar = new IndicatorMenubar ();
+            // Menubar for storing the button
+            menubar = new MenuBar ();
+            apps_button = new Widgets.AppsButton (settings);
+            
+            
+            apps_button.state_flags_changed.connect(apps_state_changed);
+            
+            menubar.append (apps_button);
             container.pack_end(menubar, false, false, panel_padding);
         }
-        
-        private void on_finished_loading(){
-            if (auto_hide){
-                on_hide_sub_menu ();
-                queue_move_out();
+    
+        private void apps_state_changed(){
+            submenu_drawn = apps_button.active;
+            
+            // Hack: "encourage" the menu to reevaluate if it needs to auto hide
+            if (!submenu_drawn){
+                mouse_left(Gdk.EventCrossing ());
             }
         }
         
-    
         public override bool draw (Cairo.Context cr) {
             base.draw(cr);
             draw_background(cr);
+            
+            // force move it to the top left; no customization here
+            panel_x = monitor_dimensions.x + 32;
+            move (panel_x, panel_y + panel_displacement);
+            
             return true;
         }
     
@@ -184,14 +144,10 @@ namespace Wingpanel.Widgets {
             this.panel_edge = settings.panel_edge;
             this.auto_hide = settings.auto_hide;
             
-            if (auto_hide){
+            if (auto_hide)
                 queue_move_out ();
-            }
             else
-            {
                 first_run = true;
-            }
-                
             queue_draw ();
         }
     }

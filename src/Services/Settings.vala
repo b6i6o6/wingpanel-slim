@@ -27,7 +27,7 @@ namespace Wingpanel.Services {
         public bool auto_adjust_alpha { get; set; }
 
         public Settings () {
-            base ("org.pantheon.desktop.wingpanel");
+            base ("org.pantheon.desktop.wingpanel-slim");
         }
     }
 }

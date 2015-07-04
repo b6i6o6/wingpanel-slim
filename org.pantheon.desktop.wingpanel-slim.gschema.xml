@@ -1,0 +1,59 @@
+<schemalist>
+	<enum id="wingpanel-slim-position-types">
+        <value nick="Flush Left" value="3" />
+		<value nick="Elementary Left" value="0" />
+		<value nick="Middle" value="1" />
+		<value nick="Elementary Right" value="2" />
+        <value nick="Flush Right" value="4" />
+	</enum>
+	<enum id="wingpanel-slim-edge-types">
+        <value nick="Slanted" value="0" />
+		<value nick="Squared" value="1" />
+		<value nick="Curved 1" value="2" />
+        <value nick="Curved 2" value="3" />
+        <value nick="Curved 3" value="4" />
+	</enum>
+	<schema path="/org/pantheon/desktop/wingpanel-slim/" id="org.pantheon.desktop.wingpanel-slim" gettext-domain="wingpanel-slim">
+		<key type="as" name="blacklist">
+			<default>[ 'libappmenu.so' ]</default>
+			<summary>List of indicators.</summary>
+			<description>These indicators will not be displayed in Wingpanel.</description>
+		</key>
+		<key name="panel-position" enum="wingpanel-slim-position-types">
+			<default>"Elementary Right"</default>
+			<summary>The position of the panel.</summary>
+			<description>The position of the panel.</description>
+		</key>
+        <key name="panel-edge" enum="wingpanel-slim-edge-types">
+			<default>"Slanted"</default>
+			<summary>The edge shape of the panel.</summary>
+			<description>The edge shape of the panel.</description>
+		</key>
+        <key type="b" name="auto-hide">
+            <default>false</default>
+            <summary>Hide the panel when not in use</summary>
+            <description>Hide the panel when not in use</description>
+        </key>
+        <key type="b" name="show-launcher">
+			<default>true</default>
+			<summary>Whether to show the Applications Launcher or not.</summary>
+			<description>Whether to show the Applications Launcher or not.</description>
+		</key>
+		<key type="s" name="default-launcher">
+			<default>"slingshot-launcher"</default>
+			<summary>The default program to use as App launcher.</summary>
+			<description>The default program to use as App launcher.</description>
+		</key>
+		<key type="d" name="background-alpha">
+			<default>0.8</default>
+			<summary>Background opacity variable.</summary>
+			<description>Background opacity variable (must be between zero and one).</description>
+		</key>
+		<key type="b" name="auto-adjust-alpha">
+			<default>true</default>
+			<summary>Automatically update background alpha.</summary>
+			<description>Automatically update the background alpha to zero if it will be readable, else 0.8.</description>
+		</key>
+
+	</schema>
+</schemalist>

@@ -1,6 +1,6 @@
 # Check http://webdev.elementaryos.org/docs/developer-guide/cmake for documentation
 
-project (wingpanel C)
+project (wingpanel-slim)
 cmake_minimum_required (VERSION 2.8)
 cmake_policy (VERSION 2.8)
 
@@ -14,9 +14,9 @@ option (OLD_LIB_IDO "Compile for LibIDO version 13.04 or previous" OFF)
 enable_testing ()
 
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
-set (PKGDATADIR "${DATADIR}/wingpanel")
-set (GETTEXT_PACKAGE "wingpanel")
-set (EXEC_NAME "wingpanel")
+set (PKGDATADIR "${DATADIR}/wingpanel-slim")
+set (GETTEXT_PACKAGE "wingpanel-slim")
+set (EXEC_NAME "wingpanel-slim")
 set (RELEASE_NAME "Luna")
 set (VERSION "0.3.0.1")
 set (VERSION_INFO "luna")
@@ -57,8 +57,8 @@ pkg_check_modules (DEPS REQUIRED ${WINGPANEL_DEPS})
 pkg_check_modules (DEPS_NOVALA REQUIRED ${WINGPANEL_DEPS_NOVALA})
 
 # Static Files
-file (GLOB desktop_entry "${CMAKE_CURRENT_SOURCE_DIR}/data/wingpanel.desktop")
-file (GLOB icon "${CMAKE_CURRENT_SOURCE_DIR}/data/wingpanel.svg")
+file (GLOB desktop_entry "${CMAKE_CURRENT_SOURCE_DIR}/data/wingpanel-slim.desktop")
+file (GLOB icon "${CMAKE_CURRENT_SOURCE_DIR}/data/wingpanel-slim.svg")
 
 # Find the Indicator Directory
 execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} indicator3-0.4 --variable=indicatordir OUTPUT_VARIABLE current_indicatordir OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -136,7 +136,7 @@ OPTIONS
 
 # Settings Schema
 include (GSettings)
-add_schema ("org.pantheon.desktop.wingpanel.gschema.xml")
+add_schema ("org.pantheon.desktop.wingpanel-slim.gschema.xml")
 
 # Add Translation Support
 add_subdirectory (po)

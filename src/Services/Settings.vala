@@ -20,14 +20,35 @@
 
 namespace Wingpanel.Services {
     public class Settings : Granite.Services.Settings {
+
+        public enum WingpanelSlimPanelPosition {
+            LEFT = 0,
+            MIDDLE = 1,
+            RIGHT = 2,
+            FLUSH_LEFT = 3,
+            FLUSH_RIGHT = 4
+        }
+        public WingpanelSlimPanelPosition panel_position { get; set; }
+        
+        public enum WingpanelSlimPanelEdge {
+            SLANTED = 0,
+            SQUARED = 1,
+            CURVED_1 = 2,
+            CURVED_2 = 3,
+            CURVED_3 = 4
+        }
+        public WingpanelSlimPanelEdge panel_edge { get; set; }
+        
+        
         public string[] blacklist { get; set; }
+        public bool auto_hide { get; set; }
         public bool show_launcher { get; set; }
         public string default_launcher { get; set; }
         public double background_alpha { get; set; }
         public bool auto_adjust_alpha { get; set; }
 
         public Settings () {
-            base ("org.pantheon.desktop.wingpanel");
+            base ("org.pantheon.desktop.wingpanel-slim");
         }
     }
 }

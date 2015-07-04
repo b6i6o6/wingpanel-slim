@@ -18,6 +18,7 @@
 public class Wingpanel.Widgets.IndicatorMenubar : MenuBar {
     private Gee.List<IndicatorWidget> sorted_items;
     private Services.IndicatorSorter sorter = new Services.IndicatorSorter ();
+    public signal void finished_loading ();
 
     public IndicatorMenubar () {
         sorted_items = new Gee.ArrayList<IndicatorWidget> ();
@@ -55,5 +56,6 @@ public class Wingpanel.Widgets.IndicatorMenubar : MenuBar {
     private void append_all_items () {
         foreach (var widget in sorted_items)
             append (widget);
+        finished_loading ();
     }
 }

@@ -17,7 +17,9 @@
 
 public class Wingpanel.App : Granite.Application {
     private IndicatorLoader indicator_loader;
+    private Services.Settings settings;
     private Widgets.BasePanel panel;
+    private Widgets.AppButtonPanel apps_button_panel;
     private Services.BackgroundManager background_manager;
 
     construct {
@@ -27,8 +29,8 @@ public class Wingpanel.App : Granite.Application {
         build_version = Build.VERSION;
         build_version_info = Build.VERSION_INFO;
 
-        program_name = "Wingpanel";
-        exec_name = "wingpanel";
+        program_name = "Wingpanel-slim";
+        exec_name = "wingpanel-slim";
         application_id = "net.launchpad.wingpanel";
     }
 
@@ -40,7 +42,6 @@ public class Wingpanel.App : Granite.Application {
 #endif
         Services.EndSessionDialog.register ();
 
-        var settings = new Services.Settings ();
         indicator_loader = new Backend.IndicatorFactory (settings.blacklist);
         panel = new Widgets.Panel (this, settings, indicator_loader);
 
@@ -48,6 +49,18 @@ public class Wingpanel.App : Granite.Application {
 
         background_manager = new Services.BackgroundManager (settings, panel.get_screen ());
         background_manager.update_background_alpha.connect (panel.update_opacity);
+
+        apps_button_panel = new Widgets.AppButtonPanel (this, settings);
+        this.settings.changed.connect (on_settings_update);
+        on_settings_update ();
+    }
+
+    private void on_settings_update () {
+        if (settings.show_launcher){
+            apps_button_panel.show_all ();
+        } else {
+            apps_button_panel.hide ();
+        }
     }
 
     protected override void activate () {
@@ -56,5 +69,5 @@ public class Wingpanel.App : Granite.Application {
 
     public static int main (string[] args) {
         return new Wingpanel.App ().run (args);
-    }
+     }
 }

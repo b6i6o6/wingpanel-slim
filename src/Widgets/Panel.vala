@@ -135,6 +135,8 @@ namespace Wingpanel.Widgets {
                 context.curve_to (x, y, x + clip_amount, y, x + clip_amount, y + height-1);
             else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_3)
                 context.curve_to (x, y + height - (clip_amount / 2) , x + (clip_amount / 2), y + height, x + clip_amount, y + height-1);
+            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_4)
+                context.curve_to (x, y + height - 1, x , y + height - 1, x + clip_amount, y + height - 1);
 
             context.line_to (x + width - clip_amount, y + height-1);
 
@@ -150,6 +152,8 @@ namespace Wingpanel.Widgets {
                 context.curve_to (x + width - clip_amount, y + height-1, x + width - clip_amount, y, x + width, y);
             else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_3)
                 context.curve_to (x + width - (clip_amount / 2), y + height-1, x + width, y + height-1 - (clip_amount / 2), x + width, y);
+            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_4)
+                context.curve_to (x + width, y + height - 1, x + width, y + height - 1, x + width, y);
 
             context.line_to (x + width, y + height);
             context.line_to (x, y + height);

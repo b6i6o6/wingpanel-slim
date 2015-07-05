@@ -35,7 +35,8 @@ namespace Wingpanel.Services {
             SQUARED = 1,
             CURVED_1 = 2,
             CURVED_2 = 3,
-            CURVED_3 = 4
+            CURVED_3 = 4,
+            CURVED_4 = 5
         }
         public WingpanelSlimPanelEdge panel_edge { get; set; }
 

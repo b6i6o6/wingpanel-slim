@@ -12,6 +12,7 @@
 		<value nick="Curved 1" value="2" />
         <value nick="Curved 2" value="3" />
         <value nick="Curved 3" value="4" />
+        <value nick="Curved 4" value="5" />
 	</enum>
 	<schema path="/org/pantheon/desktop/wingpanel-slim/" id="org.pantheon.desktop.wingpanel-slim" gettext-domain="wingpanel-slim">
 		<key type="as" name="blacklist">

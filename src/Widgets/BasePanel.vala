@@ -36,7 +36,7 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
 
     private const int SHADOW_SIZE = 4;
     private const int FALLBACK_FADE_DURATION = 150;
-    private const int ELEMENTARY_SPACING = 32;
+    private const int ELEMENTARY_SPACING = 60;
 
     private int panel_height = 0;
     private int panel_x;

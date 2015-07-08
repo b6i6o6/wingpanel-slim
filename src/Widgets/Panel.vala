@@ -29,8 +29,6 @@ namespace Wingpanel.Widgets {
 
         public Panel (Gtk.Application app, Services.Settings settings, IndicatorLoader indicator_loader) {
             base (settings);
-	    on_settings_update();
-	    this.settings.changed.connect (on_settings_update);
 
             this.indicator_loader = indicator_loader;
             set_application (app);
@@ -159,12 +157,5 @@ namespace Wingpanel.Widgets {
             context.line_to (x, y + height);
             context.line_to (x, y);
         }
-
-	private void on_settings_update () {
-            this.panel_position = settings.panel_position;
-            this.panel_edge = settings.panel_edge;
-
-            queue_draw ();
-         }
     }
 }

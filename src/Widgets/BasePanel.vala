@@ -15,6 +15,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using Gdk;
+
 public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
     private enum Struts {
         LEFT,
@@ -42,13 +44,20 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
     private int panel_x;
     private int panel_y;
     private int panel_width;
-    private int panel_displacement = 0;
     private int monitor_num;
-    private uint animation_timer = 0;
     protected int panel_padding = 10;
     protected Gdk.Rectangle monitor_dimensions;
     protected Services.Settings.WingpanelSlimPanelEdge panel_edge = Services.Settings.WingpanelSlimPanelEdge.SLANTED;
     protected Services.Settings.WingpanelSlimPanelPosition panel_position = Services.Settings.WingpanelSlimPanelPosition.RIGHT;
+
+    // Auto-hide animations
+    protected bool entering_animation = true;
+    private int panel_displacement = -40;
+    private bool mouse_inside = false;
+    private uint mouse_out_count = 0;
+    private uint slide_in_timer = 0;
+    private uint slide_out_timer = 0;
+    private uint slide_out_delay = 0;
 
     private double legible_alpha_value = -1.0;
     private double panel_alpha = 0.0;
@@ -73,6 +82,8 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
 
     public BasePanel (Services.Settings settings) {
         this.settings = settings;
+        this.settings.changed.connect (on_settings_update);
+        on_settings_update();
 
         decorated = false;
         resizable = false;
@@ -86,6 +97,11 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
         // Update the panel size on screen size or monitor changes
         screen.size_changed.connect (on_monitors_changed);
         screen.monitors_changed.connect (on_monitors_changed);
+
+        // Watch for mouse
+        add_events(EventMask.ENTER_NOTIFY_MASK | EventMask.LEAVE_NOTIFY_MASK);
+        enter_notify_event.connect(mouse_entered);
+        leave_notify_event.connect(mouse_left);
 
         destroy.connect (Gtk.main_quit);
 
@@ -263,10 +279,18 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
         cr.rectangle (size.x, size.y, size.width, size.height);
         cr.fill ();
 
-        // Slide in
-        if (animation_timer == 0) {
-            panel_displacement = -panel_height;
-            animation_timer = Timeout.add (300 / panel_height, animation_callback);
+        // Animation behavior on launch
+        if (entering_animation) {
+            entering_animation = false;
+            if (settings.auto_hide) {
+                // In auto_hide, get a glimpse of the panel before it disappears
+                panel_displacement = 0;
+                update_panel_position();
+                queue_move_out();
+            } else {
+                // Otherwise, keep the original slide in behavior
+                slide_in_timer = Timeout.add (300 / panel_height, animation_move_in);
+            }
         }
 
         var child = get_child ();
@@ -337,13 +361,66 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
         return false;
     }
 
-    private bool animation_callback () {
-        if (panel_displacement >= 0 )
-            return false;
-
-        panel_displacement += 1;
+    private void update_panel_position() {
         move (panel_x, panel_y + panel_displacement);
         shadow.move (panel_x, panel_y + panel_height + panel_displacement);
+    }
+
+    private bool animation_move_in () {
+        if (panel_displacement >= 0 ) {
+            slide_in_timer = 0;
+            return false;
+        }
+
+        panel_displacement += 1;
+        update_panel_position();
+        return true;
+    }
+
+    private bool animation_move_out () {
+        if (slide_in_timer > 0 || panel_displacement <= -panel_height+1 ) {
+            return false;
+        } else {
+            panel_displacement -= 1;
+            update_panel_position();
+            return true;
+        }
+    }
+
+    protected bool queue_move_out () {
+        if (mouse_inside) {                                             // If the mouse is inside, cancel the move out
+            mouse_out_count = 0;
+            slide_out_delay = 0;
+            return false;
+        } else {
+            mouse_out_count++;
+            if (mouse_out_count == 100){                                // If we have waited long enough, start the animation and stop the queue
+                mouse_out_count = 0;
+                slide_out_delay = 0;
+                slide_out_timer = Timeout.add(300 / panel_height, animation_move_out);
+                return false;
+            } else if (slide_out_delay == 0) {                          // If this is the first call to this function, start the timer
+                slide_out_delay = Timeout.add(10, queue_move_out);
+                return true;
+            } else {                                                    // keep chugging away
+                return true;
+            }
+        }
+    }
+
+    public bool mouse_entered(Gdk.EventCrossing e) {
+         if (settings.auto_hide) {
+             mouse_inside = true;
+             slide_in_timer = Timeout.add(300 / panel_height, animation_move_in);
+         }
+         return true;
+    }
+
+    public bool mouse_left(Gdk.EventCrossing e) {
+        if (settings.auto_hide) {
+            mouse_inside = false;
+            queue_move_out ();
+        }
         return true;
     }
 
@@ -438,5 +515,14 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
 
         if (redraw)
             queue_draw ();
+    }
+
+    private void on_settings_update() {
+        this.panel_position = settings.panel_position;
+        this.panel_edge = settings.panel_edge;
+
+        // Replay the entering animation to reset the position according to the auto_hide setting
+        entering_animation = true;
+        queue_draw();
     }
 }

@@ -70,6 +70,15 @@ namespace Wingpanel.Widgets {
         }
 
         private void create_entry (IndicatorWidget entry) {
+            string entry_name = entry.get_indicator ().get_name ();
+
+            // Hack to add spacing on the sides of the first and last indicators
+            // Without it, most curving options masks are drawn too close to the indicators
+            if (entry_name == "libdatetime.so" || entry_name == "com.canonical.indicator.datetime")
+                entry.margin_start = 10;
+            else if (entry_name == "com.canonical.indicator.session")
+                entry.margin_end = 5;
+
             right_menubar.insert_sorted (entry);
         }
 

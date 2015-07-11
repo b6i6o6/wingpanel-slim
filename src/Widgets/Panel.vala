@@ -81,13 +81,22 @@ namespace Wingpanel.Widgets {
                     entry.margin_end = 5;
             }
 
-            right_menubar.insert_sorted (entry);
+            // If this is the global menu, we add it only if it is enabled, otherwise it is ignored
+            if (entry_name == "libappmenu.so") {
+                if (settings.use_global_menu) {
+                    left_menubar.append(entry);
+                }
+            } else {
+                right_menubar.insert_sorted (entry);
+            }
         }
 
         private void delete_entry (IndicatorWidget entry) {
             var parent = entry.parent;
             
-            if (parent != null)
+            if (entry.get_indicator ().get_name () == "libappmenu.so")
+                entry.hide();
+            else if (parent != null)
                 parent.remove (entry);
             else
                 critical ("Indicator entry '%s' has no parent. Not removing from panel.", entry.get_entry_name ());

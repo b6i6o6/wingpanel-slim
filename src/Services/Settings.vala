@@ -43,6 +43,7 @@ namespace Wingpanel.Services {
         public string[] blacklist { get; set; }
         public bool slim_mode { get; set; }
         public bool auto_hide { get; set; }
+        public bool use_global_menu { get; set; }
         public bool show_launcher { get; set; }
         public string default_launcher { get; set; }
         public double background_alpha { get; set; }

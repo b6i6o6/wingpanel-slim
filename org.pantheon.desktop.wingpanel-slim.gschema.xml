@@ -16,8 +16,8 @@
 	</enum>
 	<schema path="/org/pantheon/desktop/wingpanel-slim/" id="org.pantheon.desktop.wingpanel-slim" gettext-domain="wingpanel-slim">
 		<key type="as" name="blacklist">
-			<default>[ 'libappmenu.so' ]</default>
-			<summary>List of indicators.</summary>
+			<default>[ '' ]</default>
+			<summary>List of banned indicators.</summary>
 			<description>These indicators will not be displayed in Wingpanel.</description>
 		</key>
 		<key name="panel-position" enum="wingpanel-slim-position-types">
@@ -40,7 +40,11 @@
             <summary>Enable slim mode.</summary>
             <description>Only display indicator bar instead of the full panel (requires a restart).</description>
         </key>
-
+        <key type="b" name="use-global-menu">
+            <default>false</default>
+            <summary>Enable global menu.</summary>
+            <description>Display applications menus in the panel (only applies in full mode, requires a restart).</description>
+        </key>
         <key type="b" name="show-launcher">
 			<default>true</default>
 			<summary>Whether to show the Applications Launcher or not.</summary>

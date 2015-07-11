@@ -74,10 +74,12 @@ namespace Wingpanel.Widgets {
 
             // Hack to add spacing on the sides of the first and last indicators
             // Without it, most curving options masks are drawn too close to the indicators
-            if (entry_name == "libdatetime.so" || entry_name == "com.canonical.indicator.datetime")
-                entry.margin_start = 10;
-            else if (entry_name == "com.canonical.indicator.session")
-                entry.margin_end = 5;
+            if (settings.slim_mode) {
+                if (entry_name == "libdatetime.so" || entry_name == "com.canonical.indicator.datetime")
+                    entry.margin_start = 10;
+                else if (entry_name == "com.canonical.indicator.session")
+                    entry.margin_end = 5;
+            }
 
             right_menubar.insert_sorted (entry);
         }
@@ -100,7 +102,8 @@ namespace Wingpanel.Widgets {
 
             left_menubar.append (new Widgets.AppsButton (settings));
 
-            //container.pack_start (left_menubar);
+            if (!settings.slim_mode)
+                container.pack_start (left_menubar);
             container.pack_end (right_menubar);
             //container.set_center_widget (center_menubar);
         }
@@ -130,37 +133,40 @@ namespace Wingpanel.Widgets {
             // This shape is what will be erased
             context.move_to (x, y);
 
-            if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_LEFT)
-                context.move_to (x, y + height-1);
-            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SLANTED)
-                context.line_to (x + clip_amount, y + height-1);
-            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SQUARED)
-                context.line_to (x, y + height-1);
-            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_1)
-                context.curve_to (x + clip_amount, y, x, y + height-1, x + clip_amount, y + height-1);
-            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_2)
-                context.curve_to (x, y, x + clip_amount, y, x + clip_amount, y + height-1);
-            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_3)
-                context.curve_to (x, y + height - (clip_amount / 2) , x + (clip_amount / 2), y + height, x + clip_amount, y + height-1);
-            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_4)
-                context.curve_to (x, y + height - 1, x , y + height - 1, x + clip_amount, y + height - 1);
+            // Unless full and no auto_hide, we cut off 1 px
+            int offset = (!settings.slim_mode && !settings.auto_hide) ? 0 : 1;
 
-            context.line_to (x + width - clip_amount, y + height-1);
+            if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_LEFT)
+                context.move_to (x, y + height-offset);
+            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SLANTED)
+                context.line_to (x + clip_amount, y + height-offset);
+            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SQUARED)
+                context.line_to (x, y + height-offset);
+            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_1)
+                context.curve_to (x + clip_amount, y, x, y + height-offset, x + clip_amount, y + height-offset);
+            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_2)
+                context.curve_to (x, y, x + clip_amount, y, x + clip_amount, y + height-offset);
+            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_3)
+                context.curve_to (x, y + height - (clip_amount / 2) , x + (clip_amount / 2), y + height, x + clip_amount, y + height-offset);
+            else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_4)
+                context.curve_to (x, y + height - offset, x , y + height - offset, x + clip_amount, y + height - offset);
+
+            context.line_to (x + width - clip_amount, y + height-offset);
 
             if (panel_position == Services.Settings.WingpanelSlimPanelPosition.FLUSH_RIGHT)
-                context.line_to (x + width, y + height-1);
+                context.line_to (x + width, y + height-offset);
             else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SLANTED)
                 context.line_to (x + width, y);
             else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.SQUARED)
-                context.line_to (x + width, y + height-1);
+                context.line_to (x + width, y + height-offset);
             else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_1)
-                context.curve_to (x + width, y + height-1, x + width - clip_amount, y, x + width, y);
+                context.curve_to (x + width, y + height-offset, x + width - clip_amount, y, x + width, y);
             else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_2)
-                context.curve_to (x + width - clip_amount, y + height-1, x + width - clip_amount, y, x + width, y);
+                context.curve_to (x + width - clip_amount, y + height-offset, x + width - clip_amount, y, x + width, y);
             else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_3)
-                context.curve_to (x + width - (clip_amount / 2), y + height-1, x + width, y + height-1 - (clip_amount / 2), x + width, y);
+                context.curve_to (x + width - (clip_amount / 2), y + height-offset, x + width, y + height-offset - (clip_amount / 2), x + width, y);
             else if (panel_edge == Services.Settings.WingpanelSlimPanelEdge.CURVED_4)
-                context.curve_to (x + width, y + height - 1, x + width, y + height - 1, x + width, y);
+                context.curve_to (x + width, y + height - offset, x + width, y + height - offset, x + width, y);
 
             context.line_to (x + width, y + height);
             context.line_to (x, y + height);

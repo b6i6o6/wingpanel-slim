@@ -270,6 +270,9 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
             panel_height = size.height;
             message ("New Panel Height: %i", size.height);
             shadow.move (panel_x, panel_y + panel_height + panel_displacement);
+            if(!settings.slim_mode && !settings.auto_hide) {
+                set_struts();
+            }
         }
 
         var ctx = get_draw_style_context ();
@@ -471,6 +474,31 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
         panel_resize (true);
     }
 
+    private void set_struts () {
+        if (!get_realized ())
+            return;
+
+        // Since uchar is 8 bits in vala but the struts are 32 bits
+        // we have to allocate 4 times as much and do bit-masking
+        var struts = new ulong[Struts.N_VALUES];
+
+        struts[Struts.TOP] = (panel_height + panel_y) * this.get_scale_factor ();
+        struts[Struts.TOP_START] = panel_x;
+        struts[Struts.TOP_END] = panel_x + panel_width - 1;
+
+        var first_struts = new ulong[Struts.BOTTOM + 1];
+        for (var i = 0; i < first_struts.length; i++)
+            first_struts[i] = struts[i];
+
+        unowned X.Display display = Gdk.X11Display.get_xdisplay (get_display ());
+        var xid = Gdk.X11Window.get_xid (get_window ());
+
+        display.change_property (xid, display.intern_atom ("_NET_WM_STRUT_PARTIAL", false), X.XA_CARDINAL,
+                                 32, X.PropMode.Replace, (uchar[]) struts, struts.length);
+        display.change_property (xid, display.intern_atom ("_NET_WM_STRUT", false), X.XA_CARDINAL,
+                                 32, X.PropMode.Replace, (uchar[]) first_struts, first_struts.length);
+    }
+
     private void panel_resize (bool redraw) {
         monitor_num = screen.get_primary_monitor ();
         screen.get_monitor_geometry (monitor_num, out monitor_dimensions);
@@ -503,14 +531,18 @@ public abstract class Wingpanel.Widgets.BasePanel : Gtk.Window {
         Gtk.Allocation size;
         get_allocation(out size);
 
-        panel_width = 1;
+        if (settings.slim_mode) {
+            panel_width = 1;
+        } else {
+            panel_width = monitor_dimensions.width;
+        }
         panel_x = monitor_dimensions.x + monitor_dimensions.width - size.width - ELEMENTARY_SPACING;
         panel_y = monitor_dimensions.y;
 
         move (panel_x, panel_y + panel_displacement);
         shadow.move (panel_x, panel_y + panel_height + panel_displacement);
 
-        this.set_size_request (-1, 24);
+        this.set_size_request (panel_width, 24);
         shadow.set_size_request (panel_width, SHADOW_SIZE);
 
         if (redraw)

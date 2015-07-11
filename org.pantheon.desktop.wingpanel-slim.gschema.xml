@@ -35,6 +35,12 @@
             <summary>Hide the panel when not in use</summary>
             <description>Hide the panel when not in use</description>
         </key>
+        <key type="b" name="slim-mode">
+            <default>true</default>
+            <summary>Enable slim mode.</summary>
+            <description>Only display indicator bar instead of the full panel (requires a restart).</description>
+        </key>
+
         <key type="b" name="show-launcher">
 			<default>true</default>
 			<summary>Whether to show the Applications Launcher or not.</summary>

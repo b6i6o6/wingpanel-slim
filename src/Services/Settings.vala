@@ -41,6 +41,7 @@ namespace Wingpanel.Services {
         public WingpanelSlimPanelEdge panel_edge { get; set; }
 
         public string[] blacklist { get; set; }
+        public bool slim_mode { get; set; }
         public bool auto_hide { get; set; }
         public bool show_launcher { get; set; }
         public string default_launcher { get; set; }

@@ -55,6 +55,11 @@
 			<summary>The default program to use as App launcher.</summary>
 			<description>The default program to use as App launcher.</description>
 		</key>
+                <key type="s" name="launcher-text">
+                        <default>""</default>
+                        <summary>Text for the "Applications" launcher.</summary>
+                        <description>Can also be a path to an icon. If empty, defaults to "Applications".</description>
+                </key>
 		<key type="d" name="background-alpha">
 			<default>0.8</default>
 			<summary>Background opacity variable.</summary>

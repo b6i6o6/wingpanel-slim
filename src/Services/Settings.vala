@@ -46,6 +46,7 @@ namespace Wingpanel.Services {
         public bool use_global_menu { get; set; }
         public bool show_launcher { get; set; }
         public string default_launcher { get; set; }
+        public string launcher_text { get; set; }
         public double background_alpha { get; set; }
         public bool auto_adjust_alpha { get; set; }
 

@@ -33,13 +33,14 @@ namespace Wingpanel.Widgets {
         private Services.AppLauncherService? launcher_service = null;
         private Services.Settings settings;
         private Gtk.Label apps_label;
+        private Gtk.Image apps_image;
 
         public AppsButton (Services.Settings settings) {
             this.settings = settings;
             this.can_focus = true;
 
             apps_label = new Gtk.Label ("");
-            set_widget (WidgetSlot.LABEL, apps_label);
+            apps_image = new Gtk.Image ();
             active = false;
 
             get_style_context ().add_class (StyleClass.APP_BUTTON);
@@ -87,10 +88,22 @@ namespace Wingpanel.Widgets {
             else
                 hide ();
 
-            if (settings.launcher_text != "")
-                apps_label.set_text(settings.launcher_text);
-            else
+            if (settings.launcher_text != "") {
+                var file = File.new_for_path (settings.launcher_text);
+                if (file.query_exists ()) {
+                    apps_image.set_from_file(settings.launcher_text);
+                    set_widget (WidgetSlot.IMAGE, apps_image);
+                    set_widget (WidgetSlot.LABEL, null);
+                } else {
+                    apps_label.set_text (settings.launcher_text);
+                    set_widget (WidgetSlot.LABEL, apps_label);
+                    set_widget (WidgetSlot.IMAGE, null);
+                }
+            } else {
                 apps_label.set_text(_("Applications"));
+                set_widget (WidgetSlot.LABEL, apps_label);
+                set_widget (WidgetSlot.IMAGE, null);
+            }
         }
     }
 }

@@ -39,7 +39,7 @@ public class Wingpanel.Widgets.IndicatorButton : Gtk.MenuItem {
         add_events (Gdk.EventMask.SCROLL_MASK);
     }
 
-    public void set_widget (WidgetSlot slot, Gtk.Widget widget) {
+    public void set_widget (WidgetSlot slot, Gtk.Widget? widget) {
         Gtk.Widget old_widget;
 
         if (slot == WidgetSlot.LABEL)
@@ -54,22 +54,24 @@ public class Wingpanel.Widgets.IndicatorButton : Gtk.MenuItem {
             old_widget.get_style_context ().remove_class (StyleClass.COMPOSITED_INDICATOR);
         }
 
-        // Workaround for buggy indicators: Some widgets may still be part of a previous entry
-        // if their old parent hasn't been removed from the panel yet.
-        var parent = widget.parent;
-        if (parent != null)
-            parent.remove (widget);
+        if (widget != null) {
+            // Workaround for buggy indicators: Some widgets may still be part of a previous entry
+            // if their old parent hasn't been removed from the panel yet.
+            var parent = widget.parent;
+            if (parent != null)
+                parent.remove (widget);
 
-        widget.get_style_context ().add_class (StyleClass.COMPOSITED_INDICATOR);
+            widget.get_style_context ().add_class (StyleClass.COMPOSITED_INDICATOR);
 
-        if (slot == WidgetSlot.LABEL) {
-            the_label = widget;
-            box.pack_end (the_label, false, false, 0);
-        } else if (slot == WidgetSlot.IMAGE) {
-            the_image = widget;
-            box.pack_start (the_image, false, false, 0);
-        } else {
-            assert_not_reached ();
+            if (slot == WidgetSlot.LABEL) {
+                the_label = widget;
+                box.pack_end (the_label, false, false, 0);
+            } else if (slot == WidgetSlot.IMAGE) {
+                the_image = widget;
+                box.pack_start (the_image, false, false, 0);
+            } else {
+                assert_not_reached ();
+            }
         }
     }
 }
